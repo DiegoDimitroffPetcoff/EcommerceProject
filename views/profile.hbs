@@ -1,0 +1,76 @@
+<head>
+    <script src="/index.js" defer></script>
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+    
+    <main>
+        {{#if isUser}}
+    <div class="container text-center my-3">
+        <div class="jumbotron" style="background-color: green;color: white;">
+            <h1>USER OK LOGIN!</h1>
+            <h2><i>Bienvenido {{user.userName}}</i></h2>
+            <br>
+            <h3>Nombre: {{user.firstName}}</h3>
+            <h3>Apellido: {{user.lastName}}</h3>
+            <h3>Email: {{user.email}}</h3>
+            <form action="/">
+                <div class="text-center"></div>
+                    <button class="btn btn-danger my-5">LOGOUT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{{/if}}
+
+              <center>
+        <div class="jumbotron">
+            <h1>Add new Product</h1>
+            <h5>Fill in all the square to add a new product</h5>
+                <form onsubmit="addMessage(this)" method="post">
+                <label>Add Object:</label>
+                <input type="text" name="title" id="object_searched" />
+                <br/>
+                <br/>
+                <label>Add Price:</label>
+                <input type="text" name="price" id="price_searched" />
+                <br/>
+                <input  type="submit" value="Submit" id="submite" />
+              </form>
+              <div class="jumbotron">
+
+            <h1>Here you will find All the products saved!!</h1>
+            
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Object</th>
+                <th scope="col">Price</th>
+                
+              </tr>
+            </thead>
+
+            <div id="tabla"></div>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <div id="id"></div>
+                </th>
+                  
+                 <th> <div id="object"></div> </th>
+                 <th> <div id="price"></div> </th>
+              </tr>
+            </tbody>
+            
+          </table>
+            
+          </div>
+         </center>
+    </main>
+
+    <footer>
+       {{>footer}}
+    </footer>

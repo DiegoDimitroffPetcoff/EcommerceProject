@@ -1,0 +1,31 @@
+<head>
+
+    <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+<body class="container">
+
+    
+    <main>
+        <center>
+        <div class="jumbotron">
+               <div id="compression"></div>
+    <h1>Sesion Cerrada. Hasta luego {{user.lastName}} {{user.firstName}}!</h1></main>
+            </div>
+</center>
+<center>
+<h6>Logearse Nuevamente</h6>
+    
+<form action="/login">
+    <div class="form-group">
+        <input class="btn btn-success my-3" type="submit" value="Login">
+    </div>
+   
+</form>
+ </center>
+    <footer>
+        {{>footer}}
+    </footer>
+
+</body>

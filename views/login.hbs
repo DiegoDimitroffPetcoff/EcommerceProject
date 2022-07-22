@@ -1,0 +1,47 @@
+<head>
+
+  <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+<body class="container">
+
+    
+    <main>
+        <center>
+        <div class="jumbotron">
+               <div id="compression"></div>
+
+
+    <h1>Logearse</h1>
+    <br>
+    <form class="form" role="form" action="/login" method="post" autocomplete="off">
+
+        <div class="form-group">
+            <input name='username' placeholder="Nombre" class="form-control" type="text" required>
+        </div>
+        <div class="form-group">
+            <input name='password' placeholder="Password" class="form-control" type="password" required>
+        </div>
+
+        <div class="form-group">
+        <input class="btn btn-success my-3" type="submit" value="Login">
+        </div>
+    </form>
+
+    <hr>
+    <form action="/">
+        <div class="text-center"></div>
+            <button class="btn btn-info my-3">Volver a pagina principal</button>
+        </div>
+    </form>
+
+</div>
+</center>
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+
+</body>

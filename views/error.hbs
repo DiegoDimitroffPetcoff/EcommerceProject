@@ -1,0 +1,36 @@
+<head>
+
+    <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+<body class="container">
+
+    
+    <main>
+                <div class="jumbotron">
+               <div id="compression"></div>
+<div class="container text-center my-3" >
+   
+        <h1>This page it doesn't exist  </h1>
+
+        <button class="btn btn-warning my-5" onclick="back()">VOLVER</button>
+    </div>
+</div>
+
+<script>
+    function redirect(pagina) {
+        location.href = pagina;
+    } 
+    function back() {
+        redirect('/')
+    }
+</script>
+
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+
+</body>

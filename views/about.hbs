@@ -1,0 +1,41 @@
+  <head>
+
+    <script src="/chat.js" defer></script>
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+
+    </header>
+   
+    <main>
+        <div class="jumbotron">
+               <div id="compression"></div>
+    <h1>Chat</h1>
+    
+    <form onsubmit="addMessagechat(this)">
+        <input type="email" id="email" placeholder="email"> <br>
+        <input type="text" id="nombre" placeholder="Nombre"><br>
+        <input type="text" id="apellido" placeholder="Apellido"><br>
+        <input type="Number" id="edad" placeholder="Edad"><br>
+        <input type="text" id="alias" placeholder="Alias"><br>
+        <input type="text" id="texto" placeholder="Mensaje de Texto"><br>
+        <input type="submit" value="enviar"><br>
+    </form>
+    
+
+
+
+
+
+
+  
+    <div id="filaTexto"></div>
+ 
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+
+</body>

@@ -1,0 +1,52 @@
+<head>
+
+   <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+
+<body class="container">
+    <main>
+        <center> 
+            <div class="jumbotron">
+
+    
+            
+                
+                <h1>Calculador</h1>
+                                <form action="/">
+                <div class="text-center">
+                    <button class="btn btn-info my-3">Volver a pagina principal</button>
+                 </div>
+                </form>
+
+                <table class="table">
+                    <h2>{{mensaje}} </h2>
+                    <thead>
+                        <tr>
+                            <th scope="col">Numero:</th>
+                            <th scope="col">Cantidad de repeticiones:</th>
+                        </tr>
+                    </thead>    
+                    <div id="tabla">
+                        {{#each result}} 
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div id="id">{{@key}}</div>
+                                    </th>
+                                    <th> <div id="object"></div>{{this}} 
+                                    </th>   
+                                </tr>
+                            </tbody>
+                        {{/each}}
+                    </div>
+                </table>
+            </div>
+        </center>
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+</body>

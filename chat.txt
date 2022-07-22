@@ -1,0 +1,450 @@
+[
+	{
+		"author": {
+			"email": "valeri@gmail.com",
+			"nombre": "Valeria Carolina",
+			"apellido": "Ayala",
+			"edad": "26",
+			"alias": "Vale",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "hola!!"
+		},
+		"id": 1
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Como estan todos hoy?"
+		},
+		"id": 2
+	},
+	{
+		"author": {
+			"email": "valeri@gmail.com",
+			"nombre": "Valeria Carolina",
+			"apellido": "Ayala",
+			"edad": "26",
+			"alias": "Vale",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Todo muy bien! hace mucho frio hoy"
+		},
+		"id": 3
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Si la verdad que hace mucho frio"
+		},
+		"id": 4
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Uds como estan?"
+		},
+		"id": 5
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "!!"
+		},
+		"id": 6
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D"
+		},
+		"id": 7
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "A trabajar!"
+		},
+		"id": 8
+	},
+	{
+		"author": {
+			"email": "sofia@gmail.com",
+			"nombre": "Sofia",
+			"apellido": "Dimitroff",
+			"edad": "56",
+			"alias": "Sofi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenos dias!"
+		},
+		"id": 9
+	},
+	{
+		"author": {
+			"email": "sofia@gmail.com",
+			"nombre": "Sofia",
+			"apellido": "Dimitroff",
+			"edad": "56",
+			"alias": "Sofi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Hay mucho que hacer hoy!"
+		},
+		"id": 10
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "De acuerdo!"
+		},
+		"id": 11
+	},
+	{
+		"author": {
+			"email": "valeri@gmail.com",
+			"nombre": "Valeria Carolina",
+			"apellido": "Ayala",
+			"edad": "26",
+			"alias": "Vale",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "okey!"
+		},
+		"id": 12
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D"
+		},
+		"id": 13
+	},
+	{
+		"author": {
+			"email": "gerardo@gmail.com",
+			"nombre": "Gerardo Hernesto",
+			"apellido": "Ay",
+			"edad": "52",
+			"alias": "Pichon",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenas!! los quiero mucho a todos!"
+		},
+		"id": 14
+	},
+	{
+		"author": {
+			"email": "gerardo@gmail.com",
+			"nombre": "Gerardo Hernesto",
+			"apellido": "Ayala",
+			"edad": "52",
+			"alias": "Pichon",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D"
+		},
+		"id": 15
+	},
+	{
+		"author": {
+			"email": "gerardo@gmail.com",
+			"nombre": "Gerardo Hernesto",
+			"apellido": "Ayala",
+			"edad": "52",
+			"alias": "Pichon",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Los quiero mucho!"
+		},
+		"id": 16
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Nosotros tambien pa!"
+		},
+		"id": 17
+	},
+	{
+		"author": {
+			"email": "rodri@gmail.com",
+			"nombre": "Rodrigo",
+			"apellido": "Ayala",
+			"edad": "25",
+			"alias": "Rodri",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D :D"
+		},
+		"id": 18
+	},
+	{
+		"author": {
+			"email": "valeri@gmail.com",
+			"nombre": "Valeria Carolina",
+			"apellido": "Ayala",
+			"edad": "26",
+			"alias": "Vale",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D :D"
+		},
+		"id": 19
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "d",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "NUEVO MENSAJE"
+		},
+		"id": 20
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D :;D"
+		},
+		"id": 21
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "!!"
+		},
+		"id": 22
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "HOLA"
+		},
+		"id": 23
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "SIII"
+		},
+		"id": 24
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": ":D"
+		},
+		"id": 25
+	},
+	{
+		"author": {
+			"email": "nuevapersona@gmail.com",
+			"nombre": "Nueva Persona",
+			"apellido": "Sin Apellido",
+			"edad": "00",
+			"alias": "NO TIENE",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenas!!! "
+		},
+		"id": 26
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenos dias!"
+		},
+		"id": 27
+	},
+	{
+		"author": {
+			"email": "valeri@gmail.com",
+			"nombre": "Valeria Carolina",
+			"apellido": "Ayala",
+			"edad": "26",
+			"alias": "Vale",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Como estan todos hoy?"
+		},
+		"id": 28
+	},
+	{
+		"author": {
+			"email": "sofia@gmail.com",
+			"nombre": "Sofia",
+			"apellido": "Dimitroff",
+			"edad": "54",
+			"alias": "Sofi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenas!"
+		},
+		"id": 29
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Como estan?"
+		},
+		"id": 30
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Alguien disponible?"
+		},
+		"id": 31
+	},
+	{
+		"author": {
+			"email": "diego@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "32",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "Buenas noches a todos! como estan hoy?"
+		},
+		"id": 32
+	}
+]

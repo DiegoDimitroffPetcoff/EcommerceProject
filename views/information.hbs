@@ -1,0 +1,65 @@
+<head>
+
+ <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+
+<body class="container">
+    <main>
+        <center> 
+            <div class="jumbotron">
+
+
+
+
+
+
+
+    
+            
+                
+                <h1>Informacion del proceso</h1>
+                                <form action="/">
+                <div class="text-center">
+                    <button class="btn btn-info my-3">Volver a pagina principal</button>
+                 </div>
+                </form>
+
+                <table class="table">
+                    <h2>{{argumentosEntrada}} </h2>
+
+                    <div id="tabla">
+                      
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div>{{carpetaProyecto}}</div>
+                                         ---
+                                        <div>{{processID}}</div>
+                                         ---
+                                         <div>{{pathEjecucion}}</div>
+                                         ---
+                                          <div>{{rss}}</div>
+                                           ---
+                                           <div>{{versionNodeJs}}</div>
+                                           ---
+                                           <div>{{nombrePlataforma}}</div>
+                                           ---
+                                           <div>{{carpetaProyecto}}</div>
+                                           ---
+                                           <div>{{cpu}}</div>
+                                   </th>   
+                                </tr>
+                            </tbody>
+                    
+                    </div>
+                </table>
+            </div>
+        </center>
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+</body>

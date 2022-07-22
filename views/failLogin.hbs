@@ -1,0 +1,35 @@
+<head>
+
+   <script src="/login.js" defer></script>
+    <script src="../routes/productRoute.js" defer></script>
+    
+</head>
+<body class="container">
+
+    
+    <main>
+<div class="container text-center my-3">
+    <div class="jumbotron" style="background-color: rgb(255, 25, 0);color: white;">
+        <h1> Error Login</h1> 
+        <p>User or Password invalid</p>
+
+        <button class="btn btn-warning my-5" onclick="back()">VOLVER</button>
+    </div>
+</div>
+
+<script>
+    function redirect(pagina) {
+        location.href = pagina;
+    } 
+    function back() {
+        redirect('/')
+    }
+</script>
+
+    </main>
+
+    <footer>
+        {{>footer}}
+    </footer>
+
+</body>
