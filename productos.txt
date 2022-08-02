@@ -20,88 +20,58 @@
 		"id": 4
 	},
 	{
-		"title": "Celulares",
-		"price": "1000",
+		"title": "Manual",
+		"price": "100",
 		"id": 5
 	},
 	{
-		"title": "Pollo",
-		"price": 8253,
+		"title": "Auriculares",
+		"price": "100",
 		"id": 6
 	},
 	{
-		"title": "Camiseta",
-		"price": 1494,
+		"title": "audifonos",
+		"price": "200",
 		"id": 7
 	},
 	{
-		"title": "Pantalones",
-		"price": 3355,
+		"title": "Compu",
+		"price": "300",
 		"id": 8
 	},
 	{
-		"title": "Coche",
-		"price": 5017,
+		"title": "Termolar",
+		"price": "400",
 		"id": 9
 	},
 	{
-		"title": "Raton",
-		"price": 4509,
+		"title": "Marcador Fluor",
+		"price": "600",
 		"id": 10
 	},
 	{
-		"title": "Silla",
-		"price": 3127,
+		"title": "Marcador Oscuro",
+		"price": "700",
 		"id": 11
 	},
 	{
-		"title": "Ordenador",
-		"price": 9925,
+		"title": "casa",
+		"price": "12398",
 		"id": 12
 	},
 	{
-		"title": "Pescado",
-		"price": 6501,
+		"title": "Cajas",
+		"price": "1233",
 		"id": 13
 	},
 	{
-		"title": "Copas",
-		"price": "20000",
+		"title": "Plasticola",
+		"price": "2000",
 		"id": 14
 	},
 	{
-		"title": "Auriculares",
-		"price": "10",
+		"title": "Celular",
+		"price": "2000",
 		"id": 15
-	},
-	{
-		"title": "Termolar",
-		"price": "1000",
-		"id": 16
-	},
-	{
-		"title": "Camion",
-		"price": "20",
-		"id": 17
-	},
-	{
-		"title": "Auriculares",
-		"price": "1",
-		"id": 18
-	},
-	{
-		"title": "Camion",
-		"price": "20",
-		"id": 19
-	},
-	{
-		"title": "Camisa",
-		"price": "200",
-		"id": 20
-	},
-	{
-		"title": "Camperon",
-		"price": "3000",
-		"id": 21
 	}
 ]

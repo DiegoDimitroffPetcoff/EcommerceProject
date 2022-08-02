@@ -35,6 +35,25 @@ class Contenedor {
       console.log(`Error al intentar guardar el archivo: ${error}`);
     }
   }
+
+  getById(x) {
+    let array = [];
+    let y = x;
+    try {
+      let data = fs.readFileSync(this.route, "utf-8");
+      array = JSON.parse(data);
+    } catch {
+      console.log("catch error");
+    }
+    let object = null;
+
+    array.forEach((element) => {
+      if (element.id == y) {
+        object = element;
+      }
+    });
+    return object;
+  }
 }
 
 module.exports = Contenedor;

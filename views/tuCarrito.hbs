@@ -1,0 +1,44 @@
+<head>
+    <script src="/index.js" defer></script>
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+    
+    <main>     
+        <div class="jumbotron">       
+       <center> <h1 style="color:rgb(56, 93, 56)">Tu Carrito</h1></center>
+      <div style="background:rgb(133, 202, 133)">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+
+                <div id="tabla"></div>
+                {{#each Productos}}
+                <tbody>
+                    <th><h5 style="color:rgb(56, 93, 56)"> {{this.id}} </h5></th>
+                    <th><h5 style="color:rgb(56, 93, 56)">{{this.title}}</h5></th>
+                    <th> <h5 style="color:rgb(56, 93, 56)">${{this.price}}</h5> </th>
+                </tbody>
+                {{/each}}
+                
+          </table>
+          </div>
+          <CENTER>
+                <form onsubmit="myFunction(this)" method="get" action="/tuCompra">                       
+                <div><input  type="submit" value="COMPRAR" id="idNumber" /> </div></th>                     
+                </form>
+        </CENTER>
+         </div> 
+
+    </main>
+
+    <footer>
+       {{>footer}}
+    </footer>

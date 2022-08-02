@@ -10,21 +10,10 @@
 
               <center>
         <div class="jumbotron">
-            <h1>Add new Product</h1>
-            <h5>Fill in all the square to add a new product</h5>
-                <form onsubmit="addMessage(this)" method="post">
-                <label>Add Object:</label>
-                <input type="text" name="title" id="object_searched" />
-                <br/>
-                <br/>
-                <label>Add Price:</label>
-                <input type="text" name="price" id="price_searched" />
-                <br/>
-                <input  type="submit" value="Submit" id="submite" />
-              </form>
-              <div class="jumbotron">
+            
 
-            <h1>Here you will find All the products saved!!</h1>
+
+            <h1>Productos Disponibles</h1>
             
             <table class="table">
             <thead>
@@ -32,6 +21,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Object</th>
                 <th scope="col">Price</th>
+                
                 
               </tr>
             </thead>
@@ -45,12 +35,43 @@
                   
                  <th> <div id="object"></div> </th>
                  <th> <div id="price"></div> </th>
+                 
+                 <th> <div id="button">
+    
+                 </div> </th>
+                 
+               
               </tr>
             </tbody>
             
           </table>
+                        <h5>Agregar nuevo producto</h5>
+                <form onsubmit="addMessage(this)" method="post" action="./productos">
+                <label>Add Object:</label>
+                <input type="text" required name="title" id="object_searched" />
+                <br/>
+                <br/>
+                <label>Add Price:</label>
+                <input type="text" required name="price" id="price_searched" />
+                <br/>
+                <input  type="submit" value="Submit" id="submite" />
+                
+              </form>
+              <div class="jumbotron">
+
+          {{!-- FILTRAR PRODUCTO --}}
             
-          </div>
+            <h5>Agrega el ID del prducto que deseas agregar a Tu Carrito</h5>
+                <form onsubmit="filterProduct(this)" method="get" action="/filter">
+                <label></label>
+                <input type="number" required name="id" id="idNumber" placeholder="Agregar ID del producto  " />
+                 <br/>
+                <input  type="submit" value="Search" id="submite" />
+              </form>
+              <div class="jumbotron">
+
+           
+
          </center>
     </main>
 

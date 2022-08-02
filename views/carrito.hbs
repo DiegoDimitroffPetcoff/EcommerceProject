@@ -1,0 +1,66 @@
+<head>
+    <script src="/index.js" defer></script>
+   
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+
+
+<main>
+<center>
+        <div class="jumbotron">
+          {{!-- FILTRAR PRODUCTO --}}
+            <h1>Filtrar Producto</h1>
+            <h5>Agrega el ID del prducto que deseas agregar a Tu Carrito</h5>
+                <form onsubmit="filterProduct(this)" method="get" action="/filter">
+                <label></label>
+                <input type="number" name="id" id="idNumber" placeholder="Agregar ID del producto  " />
+                 <br/>
+                <input  type="submit" value="Search" id="submite" />
+              </form>
+              <div class="jumbotron">
+
+            <h5>Producto Filtrado</h5>
+            {{#if msj}}
+            <h5>{{msj}}</h5>{{/if}}
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Object</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+
+              {{!-- AGREGAR PRODUCTO A MI CARRITO --}}
+            <div id="tabla"></div>
+            <tbody>
+               <form onsubmit="myFunction(this)" method="post" action="/filter">
+              <tr>
+                <th scope="row">
+                {{filter.id}}
+                </th>                 
+                 <th > {{filter.title}}</th>
+                 <th> $ {{filter.price}}</th>              
+                
+                <th>                 
+                 <div><input  type="submit" value="AGREGAR A CARRITO" id="idNumber" /> </div></th>                     
+                </form>
+                 </tr>
+            </tbody>
+            
+           </table>
+            
+          </div>
+
+
+
+         </center>
+    </main>
+    </header>
+    {{>footer}}
+  </body>
+
+</html>

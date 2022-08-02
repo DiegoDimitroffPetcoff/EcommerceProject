@@ -1,0 +1,85 @@
+<head>
+    <script src="/index.js" defer></script>
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+<%- include('./partials/head.ejs', {title:"Pagina principal"})%>
+
+  <body>
+
+    <header>
+      <div class="container-gral">
+        <div class="container1">
+          <table class="table">
+            <thead  class="square1">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre de producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Foto</th>
+
+                <th scope="col">Fecha de Creacion del producto</th>
+                <th scope="col">Fecha de Actualizacion del producto</th>
+                <th scope="col">Stock</th>
+              </tr>
+            </thead>
+            <tbody class="square2">
+              <% getProductos.forEach(function(result){ %>
+                <tr >
+
+                  <th scope="row">
+                    <%= result.id %>
+                  </th>
+                  <td>
+                    <%= result.title %>
+                  </td>
+                  <td>$<%= result.price %>
+                  </td>
+                  <td>
+                    <%= result.descripcion %>
+                  </td>
+                  <td>
+                    <%= result.foto %>
+                  </td>
+                  <td>
+                    <%= result.date %>
+                  </td>
+                  <td>
+                    <%= result.update %>
+                  </td>
+                  <td>
+                    <%= result.stock %>
+                  </td>
+
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+        </div>
+          <div class="jumbotron">
+            <h1>Add new Product</h1>
+            <h5>Fill in all the square to add a new product</h5>
+            <form action="/" method="post">
+              <label>Add Object:</label>
+              <input type="text" name="title" id="object_searched" />
+              <br />
+              <br />
+              <label>Add Price:</label>
+              <input type="text" name="price" id="price_searched" />
+
+
+              <br />
+              <input type="submit" value="Submit" id="submite" />
+            </form>
+
+          </div>
+    </div>
+      </main>
+    </header>
+    <%- include('./partials/footer.ejs') -%>
+  </body>
+
+</html>

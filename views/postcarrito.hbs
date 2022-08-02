@@ -1,0 +1,50 @@
+<head>
+    <script src="/index.js" defer></script>
+   
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+
+
+<main>
+
+        <div class="jumbotron">
+            <h1>AGREGASTE A TU CARRITO:</h1>
+
+            <table class="table">
+            <thead>
+              <tr>
+            
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+              
+              </tr>
+            </thead>
+
+            <div id="tabla"></div>
+           <tbody>
+               <form onsubmit="myFunction(this)" method="post" action="./filter">
+              <tr>
+                
+                <th ><H1> {{filter.title}}</H1>
+                 <th><H1> $ {{filter.price}}</H1></th>
+              
+                 </form>
+                 </tr>
+            </tbody>
+            
+           </table>
+            
+          </div>
+
+
+
+         </center>
+    </main>
+    </header>
+    {{>footer}}
+  </body>
+
+</html>

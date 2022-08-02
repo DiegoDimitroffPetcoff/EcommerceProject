@@ -1,5 +1,6 @@
 const log4js = require("log4js");
-
+const ProductosContainer = require("../src/daos/file/productosContainer");
+const productos = new ProductosContainer();
 // ROOT---------------------------
 function getRoot(req, res) {
   const logger = log4js.getLogger("info");
@@ -57,7 +58,10 @@ function postSignup(req, res) {
   if (req.isAuthenticated()) {
     const logger = log4js.getLogger("info");
     logger.info("Peticion recibida en la ruta /signup. Usuario Creado Correctamente");
+    
     let user = req.user;
+    // console.log("PARA CONTROLAR CONTROLE.JS ABAJO ESTA user:")
+    // console.log(user)
     let isUser = true;
     res.render("profile", { user, isUser });
   } else {
@@ -67,10 +71,17 @@ function postSignup(req, res) {
   }
 }
 function getFailsignup(req, res) {
-  let logger = log4js.getLogger("error");
-  logger.error("Hubo un error en el Sign up");
-  console.log("error en login");
+  
   res.render("failSignup", {});
+}
+function filter(req, res) {
+  // console.log( productos.getById(req.query.id))
+  let filter = productos.getById(req.query.id);
+  productFiltered = productos.getById(req.query.id);
+  res.render("carrito", {
+    Producto: productos.getById(req.params.num),
+    filter,
+  });
 }
 
 // LOG OUT---------------------------
@@ -116,4 +127,5 @@ module.exports = {
   getFailsignup,
   getLogout,
   chatLogin,
+  filter
 };

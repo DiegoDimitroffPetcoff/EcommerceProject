@@ -16,6 +16,8 @@
             <h3>Nombre: {{user.firstName}}</h3>
             <h3>Apellido: {{user.lastName}}</h3>
             <h3>Email: {{user.email}}</h3>
+            <h3>Avatar: <img src="{{this.avatar}}" height="300px" width="300px" alt="avatar"></h3>
+            
             <form action="/">
                 <div class="text-center"></div>
                     <button class="btn btn-danger my-5">LOGOUT</button>
@@ -29,7 +31,7 @@
         <div class="jumbotron">
             <h1>Add new Product</h1>
             <h5>Fill in all the square to add a new product</h5>
-                <form onsubmit="addMessage(this)" method="post">
+                <form onsubmit="addMessage(this)" method="post" action="./productos">
                 <label>Add Object:</label>
                 <input type="text" name="title" id="object_searched" />
                 <br/>
@@ -50,6 +52,7 @@
                 <th scope="col">Object</th>
                 <th scope="col">Price</th>
                 
+                
               </tr>
             </thead>
 
@@ -62,6 +65,8 @@
                   
                  <th> <div id="object"></div> </th>
                  <th> <div id="price"></div> </th>
+                 <th> <div id="button"></div> </th>
+               
               </tr>
             </tbody>
             

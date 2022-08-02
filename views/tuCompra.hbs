@@ -1,0 +1,50 @@
+<head>
+    <script src="/index.js" defer></script>
+</head>
+<body class="container">
+    <header>
+        
+    </header>
+    
+    <main>     
+         <div class="jumbotron"> 
+       <center> <h1 style="color:rgb(202, 76, 76)">Acabas de comprar los siguientes productos:</h1>
+       
+      <div style="background:rgb(133, 202, 133)">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+
+                
+                {{#each Productos}}
+                <tbody style="color:white">
+                    <th><h5 style="color:white">{{this.id}} </h5></th>
+                    <th><h5 style="color:white">{{this.title}}</h5></th>
+                    <th> <h5 style="color:white">${{this.price}}</h5> </th>
+                </tbody>
+                {{/each}}
+                
+                
+          </table>
+        </div>
+        <h5 style="color:rgb(249, 19, 19)">{{nombre}} Muchas gracias por tu compra!</h5><br>
+        <h6 style="color:rgb(249, 19, 19)">Te enviamos un e-mail a {{email}} con todos los detalles!</h6></center>
+    <form action="/productos">
+    <center>
+        <div class="text-center"></div>
+            <button class="btn btn-info my-3">Volver a pagina principal</button>
+        
+    </center>
+    </form>
+         </div> 
+</div>
+    </main>
+
+    <footer>
+       {{>footer}}
+    </footer>
