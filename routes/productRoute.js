@@ -6,7 +6,7 @@ const route = express();
 
 const SERVER = new HttpServer(route);
 const io = new IOServer(SERVER);
-const TEST_MAIL = "diegodimitroffpetcoff@gmail.com";
+const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
 
 const session = require("express-session");
 const log4js = require("log4js");

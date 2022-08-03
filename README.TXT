@@ -8,4 +8,6 @@ Realizo trabajo cumpliendo consignas.
 7. Todo el servidor puede levantarse en modo fork o en modo cluster agregando este ultimo como parametro
 8. Se realizadon las prubas con artillery, se puede observar la diferencia positiva en la performance de la ejecucion en modo claster, con una lectura mas rapida del /root una vez logeado. (dejo toda la documentacion en la carpeta testArtillery)
 9. Todo el proyecto se encuentra subido a HEROKU bajo el link https://aplicacion-de-compras.herokuapp.com/ funcionando todo correctamente
+10. Todas las acciones realizadas por el usuario se encuentran personalizadas segun sus datos personales. Durante la navegacion en la app el usuario vera su nombre. Si realiza alguna compra podra ver su correo y el numero que agrego cuando se resgistro, que sera donde toda la info sera enviada.
+11. A los fines de ser mas practico, y teniendo en cuenta que este es solo un proyecto TEST, dejo en el proyecto las claves sensibles que podran ser modificadas con variables globales en caso de agregarlas. 
 

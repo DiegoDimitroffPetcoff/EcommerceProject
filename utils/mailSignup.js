@@ -1,6 +1,6 @@
 const dataUser = require("../routes/productRoute");
 const nodemailer = require("nodemailer");
-const TEST_MAIL = "diegodimitroffpetcoff@gmail.com";
+const TEST_MAIL = process.env.TEST_MAIL ||"diegodimitroffpetcoff@gmail.com";
 const log4js = require("log4js");
 
 
@@ -10,26 +10,13 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: TEST_MAIL,
     type: "OAuth2",
-    clientId:
-      "911738212473-n37i4clrtuf90c2m7dvlku12jojqb7el.apps.googleusercontent.com",
-    clientSecret: "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",
-    refreshToken:
-      "1//04jgf7YQDvTiyCgYIARAAGAQSNwF-L9Ir0pOWRTBzqHIwJWSHlGR_QL6XB2EzsbSPRWXZDF1IOQsTxjqEI2tKH6LcD4zL1j9U4_I",
-    accessToken:
-      "ya29.A0AVA9y1uWGn8nBG7Ai1rksjxr7Q3cvinXDnFNS_7I1FoVETcjPmCzXJOgT1IoICn-q9DL942evdbEyDmuILnYkKQjoe3ej44eNYk9uKgWJOHQ6P62r1tQiLerM8cyyPi50-ZQ2FTSSKycESMP9c5AMARqfXsbYUNnWUtBVEFTQVRBU0ZRRTY1ZHI4QXFFOGcwdEZpaDA2RUZZaEFGblpzZw0163",
+    clientId: process.env.CLIENT_ID ||"911738212473-n37i4clrtuf90c2m7dvlku12jojqb7el.apps.googleusercontent.com",
+    clientSecret:process.env.CLIENT_SECRET ||"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",
+    refreshToken:process.env.REFRESH_TOKEN ||"1//04jgf7YQDvTiyCgYIARAAGAQSNwF-L9Ir0pOWRTBzqHIwJWSHlGR_QL6XB2EzsbSPRWXZDF1IOQsTxjqEI2tKH6LcD4zL1j9U4_I",
+    accessToken:process.env.ACCESS_TOKEN ||"ya29.A0AVA9y1uWGn8nBG7Ai1rksjxr7Q3cvinXDnFNS_7I1FoVETcjPmCzXJOgT1IoICn-q9DL942evdbEyDmuILnYkKQjoe3ej44eNYk9uKgWJOHQ6P62r1tQiLerM8cyyPi50-ZQ2FTSSKycESMP9c5AMARqfXsbYUNnWUtBVEFTQVRBU0ZRRTY1ZHI4QXFFOGcwdEZpaDA2RUZZaEFGblpzZw0163",
   },
 });
-//const producto = {
-//    name: 'Heladera',
-//    precio: 100
-//}
 
-// const mailOptions = {
-//     from: 'Envio este correo desde mi App',
-//     to: TEST_MAIL,
-//     subject: 'Nuevo Registro!',
-//     html: HTML
-// }
 
 async function sendEmail(userWithId, mailOptions) {
   try {
