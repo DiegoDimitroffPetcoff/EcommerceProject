@@ -30,6 +30,7 @@ const {
   renderMsj,
   renderMsjAdministrator,
 } = require("../utils/mailSignup");
+const sendSms = require("../utils/sms")
 
 const info = require("../utils/info");
 
@@ -87,7 +88,7 @@ passport.use(
         console.log("password or user invalid");
         return done(null, false);
       }
-      sendEmail();
+      
       return done(null, user);
     });
   })
@@ -348,6 +349,10 @@ route.get("/tuCompra", (req, res) => {
     };
     sendEmail("Se envio e-mail", mailOptions);
     sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
+  
+      sendSms(HTML)
+
+    
     res.render("tuCompra", {
       Productos: carrito.read(),
       email: req.user.email,

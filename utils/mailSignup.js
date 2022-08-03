@@ -1,6 +1,8 @@
 const dataUser = require("../routes/productRoute");
 const nodemailer = require("nodemailer");
 const TEST_MAIL = "diegodimitroffpetcoff@gmail.com";
+const log4js = require("log4js");
+
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -32,22 +34,14 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(userWithId, mailOptions) {
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(info)
+    const logger = log4js.getLogger("info");
+    logger.info("Correo enviado Correctamente")
   } catch (error) {
     console.log("NO SE PUDO MANDAR EL E MAIL")
     console.log(error);
   }
 }
 
-// async function sendEmailAdministrator(userWithId, mailOptions) {
-//   try {
-//     const info = await transporter.sendMail(mailOptions);
-//     console.log(info)
-//   } catch (error) {
-//     console.log("NO SE PUDO MANDAR EL E MAIL")
-//     console.log(error);
-//   }
-// }
 
 function renderMsj(productos, nombre) {
   let HTML = `<h1>${nombre} Muchas gracias por tu compra!</h1> 
@@ -63,7 +57,7 @@ function renderMsj(productos, nombre) {
   <h5>Compra realizada desde la Aplicacion Proyecto de CoderHouse</h5>
   <h6>© Diego Dimitroff Petcoff 2022 Nerver Stop</h6>`
   
-  console.log(HTML)
+  
   return HTML
 }
 
@@ -92,7 +86,7 @@ function renderMsjAdministrator(productos, usuario) {
   HTML +=`
   <h6>© Diego Dimitroff Petcoff 2022 Nerver Stop</h6>`
   
-  console.log(HTML)
+  
   return HTML
 }
 
