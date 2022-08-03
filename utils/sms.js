@@ -6,12 +6,12 @@ const AUTH_TOKEN = "ca4eec173764317420347e21884fac45";
 
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
-async function sendSms(msj) {
+async function sendSms(msj, client) {
   try {
     const message = await client.messages.create({
       body: msj,
       from: "+19896137462",
-      to: "+543624997599",
+      to: client,
     });
     const logger = log4js.getLogger("info");
     logger.info("Mensaje de texto enviado")

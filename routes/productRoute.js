@@ -332,6 +332,7 @@ route.get("/tucarrito", (req, res) => {
 route.get("/tuCompra", (req, res) => {
   if (req.isAuthenticated()) {
     let Productos = carrito.read();
+    let phoneUser = req.user.phonenumber;
     let HTML = renderMsj(Productos, req.user.lastName);
     let HTMLadministrator = renderMsjAdministrator(Productos,req.user);
     let mailOptions = {
@@ -350,13 +351,14 @@ route.get("/tuCompra", (req, res) => {
     sendEmail("Se envio e-mail", mailOptions);
     sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
   
-      sendSms(HTML)
+    sendSms(HTML, phoneUser)
 
     
     res.render("tuCompra", {
       Productos: carrito.read(),
       email: req.user.email,
       nombre: req.user.lastName,
+      phoneUser
     });
   } else {
     let logger = log4js.getLogger("error");
