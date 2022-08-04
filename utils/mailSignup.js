@@ -27,7 +27,7 @@ async function sendEmail(userWithId, mailOptions) {
   try {
     const info = await transporter.sendMail(mailOptions);
     const logger = log4js.getLogger("info");
-    logger.info("");
+    logger.info("E-mail enviado de manera correcta");
   } catch (error) {
     console.log("NO SE PUDO MANDAR EL E MAIL");
     console.log(error);
