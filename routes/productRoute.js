@@ -29,9 +29,10 @@ const {
   sendEmail,
   renderMsj,
   renderMsjAdministrator,
-  renderMsjSmsWap
+  renderMsjSmsWap,
+  renderMsjWapAdministrator
 } = require("../utils/mailSignup");
-const {sendSms, sendWap} = require("../utils/msj")
+const {sendSms, sendWap, sendWapAdministrator} = require("../utils/msj")
 
 const info = require("../utils/info");
 
@@ -336,7 +337,7 @@ route.get("/tuCompra", (req, res) => {
     let phoneUser = req.user.phonenumber;
     let HTML = renderMsj(Productos, req.user.lastName);
     let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
-    renderMsjSmsWap
+    let HTMLSMSWAPADM = renderMsjWapAdministrator(Productos, req.user.lastName)
     let HTMLadministrator = renderMsjAdministrator(Productos,req.user);
     let mailOptions = {
       from: "Envio este correo desde mi App",
@@ -353,8 +354,9 @@ route.get("/tuCompra", (req, res) => {
     };
     sendEmail("Se envio e-mail", mailOptions);
     sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
-    sendWap(HTMLSMSWAP,phoneUser)
-    sendSms(HTMLSMSWAP, phoneUser)
+    sendWap(HTMLSMSWAP,phoneUser);
+    sendWapAdministrator(HTMLSMSWAPADM);
+    sendSms(HTMLSMSWAP, phoneUser);
 
     
     res.render("tuCompra", {

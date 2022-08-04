@@ -1,3 +1,8 @@
 [
-
+	{
+		"title": "Ensalada",
+		"price": 8058,
+		"id": 1,
+		"Timestamp": "Wed Aug 03 2022 21:30:12 GMT-0300 (hora estándar de Argentina)1659573012023"
+	}
 ]
