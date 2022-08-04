@@ -48,6 +48,24 @@ function renderMsj(productos, nombre) {
   return HTML
 }
 
+function renderMsjSmsWap(productos, nombre) {
+  let HTML = `${nombre} Muchas gracias por tu compra! 
+  
+  Esta es la lista de los productos que has adquirido.
+   ` 
+  productos.forEach(elem => {    
+  HTML += `
+          Produto: ${elem.title} 
+          Precio: $${elem.price}
+          - `});
+  HTML +=`Tu compra ya esta en camino!
+  Compra realizada desde la Aplicacion Proyecto de CoderHouse
+  © Diego Dimitroff Petcoff 2022 Nerver Stop`
+  
+  
+  return HTML
+}
+
 function renderMsjAdministrator(productos, usuario) {
   let HTML = `<h1>Compra realizada</h1> 
   <h2>Info del usuario:</h2> <br>
@@ -77,4 +95,4 @@ function renderMsjAdministrator(productos, usuario) {
   return HTML
 }
 
-module.exports = {sendEmail, renderMsj, renderMsjAdministrator};
+module.exports = {sendEmail, renderMsj, renderMsjAdministrator,renderMsjSmsWap};

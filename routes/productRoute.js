@@ -29,8 +29,9 @@ const {
   sendEmail,
   renderMsj,
   renderMsjAdministrator,
+  renderMsjSmsWap
 } = require("../utils/mailSignup");
-const sendSms = require("../utils/sms")
+const {sendSms, sendWap} = require("../utils/msj")
 
 const info = require("../utils/info");
 
@@ -139,7 +140,7 @@ passport.use(
           Numero de Celular: ${userWithId.phonenumber} <br>
           E mail: ${userWithId.email}</h2>`;
 
-          console.log("user created Successfuly");
+          
           const mailOptions = {
             from: "Envio este correo desde mi App",
             to: TEST_MAIL,
@@ -334,11 +335,13 @@ route.get("/tuCompra", (req, res) => {
     let Productos = carrito.read();
     let phoneUser = req.user.phonenumber;
     let HTML = renderMsj(Productos, req.user.lastName);
+    let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
+    renderMsjSmsWap
     let HTMLadministrator = renderMsjAdministrator(Productos,req.user);
     let mailOptions = {
       from: "Envio este correo desde mi App",
-      // to:req.user.email
-      to: TEST_MAIL,
+      to:req.user.email,
+      // to: TEST_MAIL,
       subject: `${req.user.lastName} muchas gracias por tu compra!`,
       html: HTML,
     };
@@ -350,8 +353,8 @@ route.get("/tuCompra", (req, res) => {
     };
     sendEmail("Se envio e-mail", mailOptions);
     sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
-  
-    sendSms(HTML, phoneUser)
+    sendWap(HTMLSMSWAP,phoneUser)
+    sendSms(HTMLSMSWAP, phoneUser)
 
     
     res.render("tuCompra", {
