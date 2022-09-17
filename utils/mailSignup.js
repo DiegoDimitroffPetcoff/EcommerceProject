@@ -1,4 +1,4 @@
-const dataUser = require("../routes/productRoute");
+const dataUser = require("../routes/routes");
 const nodemailer = require("nodemailer");
 const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
 const log4js = require("log4js");

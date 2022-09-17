@@ -1,5 +1,5 @@
 const express = require("express");
-const {data} = require('../routes/productRoute')
+const {data} = require('../routes/routes')
 console.log(data);
 function renderName(params) {
   let name = `<h1>Bienvenido ${params}</h1>

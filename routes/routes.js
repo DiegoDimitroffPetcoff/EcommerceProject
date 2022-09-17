@@ -1,12 +1,60 @@
 const express = require("express");
-const route = express();
-const routes = require("../utils/controler");
+const { Server: HttpServer } = require("http");
+const { Server: IOServer } = require("socket.io");
 
-// ----------------------------------------------------------------------------------
-const { TIEMPO_EXPIRACION } = require("../src/config/globals");
+const route = express();
+
+const SERVER = new HttpServer(route);
+const io = new IOServer(SERVER);
+const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
+
 const session = require("express-session");
+const log4js = require("log4js");
+
+// const MongoStore = require("connect-mongo");
+const ramdomsChild = require("../utils/ramdomsChild");
+const { fork } = require("child_process");
+// const compressionModule = require('compression');
+const faker = require("faker");
+faker.locale = "es";
+
+const ChatContainer = require("../src/daos/file/chatContainer");
+const ProductosContainer = require("../src/daos/file/productosContainer");
+const CarritoDaosArchivos = require("../src/daos/file/carritoContainer");
+
+// const util = require("util");
+// const { fakerCreate } = require("../utils/mocks");
+const { normalization } = require("../utils/normalizr");
+const {
+  sendEmail,
+  renderMsj,
+  renderMsjAdministrator,
+  renderMsjSmsWap,
+  renderMsjWapAdministrator,
+} = require("../utils/mailSignup");
+const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
+
+const info = require("../utils/info");
+
+const compressionRatio = require("../utils/calculator");
+// const userLogged = require("../utils/sessions");
+
+const fs = require("fs");
+// const { response } = require("express");
+
+route.use(express.json());
+route.use(express.urlencoded({ extended: true }));
+route.use(express.static("./public"));
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+
+const routes = require("../utils/controler");
+const UserModel = require("../src/models/usuarios.js");
+const validatePass = require("../utils/passValidatos");
+const createHash = require("../utils/hashGenerator");
+const { TIEMPO_EXPIRACION } = require("../src/config/globals");
+
 route.use(
   session({
     secret: "diego",
@@ -20,8 +68,11 @@ route.use(
     saveUninitialized: true,
   })
 );
+
 route.use(passport.initialize());
 route.use(passport.session());
+
+route.set("views", "./views");
 
 passport.use(
   "login",
@@ -38,11 +89,12 @@ passport.use(
         console.log("password or user invalid");
         return done(null, false);
       }
-      
+
       return done(null, user);
     });
   })
 );
+const avatar = faker.image.avatar();
 
 passport.use(
   "signup",
@@ -88,7 +140,6 @@ passport.use(
           Numero de Celular: ${userWithId.phonenumber} <br>
           E mail: ${userWithId.email}</h2>`;
 
-          
           const mailOptions = {
             from: "Envio este correo desde mi App",
             to: TEST_MAIL,
@@ -109,30 +160,24 @@ passport.serializeUser((user, callback) => {
 passport.deserializeUser((id, callback) => {
   UserModel.findById(id, callback);
 });
-// --------------------------------------------------------------------------------------------
-const handlebars = require("express-handlebars");
-route.use(express.json());
-route.use(express.urlencoded({ extended: true }));
 
-route.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-    defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/partials/",
-    runtimeOptions: {
-      allowProtoPropertiesByDefault: true,
-      allowProtoMethodsByDefault: true,
-    },
-  })
-);
+const productos = new ProductosContainer();
 
+const chatContainer = new ChatContainer();
 
-
-// ---------------------------------------------------------------------------------------------
-
-
+log4js.configure({
+  appenders: {
+    Console: { type: "console" },
+    // errorFile: { type: "file", filename:'loggerError.log' },
+    warnFile: { type: "file", filename: "warn.log" },
+    errorFile: { type: "file", filename: "error.log" },
+  },
+  categories: {
+    default: { appenders: ["warnFile", "Console"], level: "warn" },
+    info: { appenders: ["Console"], level: "info" },
+    error: { appenders: ["errorFile", "Console"], level: "error" },
+  },
+});
 
 class Routes {
   constructor() {}
@@ -160,8 +205,232 @@ class Routes {
 
     // LOGOUT--------------------------------
     route.get("/logout", routes.getLogout);
+
+    // PRODUCTOS - --------------------------------
+    let compression = null;
+
+    io.on("connection", (socket) => {
+      try {
+        let prueba = productos.read();
+        socket.emit("messages", prueba);
+        socket.on("new-message", (data1) => {
+          productos.save(data1);
+          prueba.push(data1);
+
+          io.sockets.emit("messages", prueba);
+        });
+      } catch (error) {
+        let logger = log4js.getLogger("errorConsole");
+        logger.error("PROBANDO EL LOG DE ERROR");
+      }
+    });
+
+    // CHAT- ---------------------------------
+    io.on("connection", (socket) => {
+      try {
+        // SI QUITO EL COMENTARIO DE LAS LINEAS 192 Y 193 PUEDO OBSERVER QUE SE MUESTRA EN LA CONSOLA EL ERROR DE MANERA CORRECTA
+        // let logger = log4js.getLogger("error");
+        // logger.error("PROBANDO EL LOG DE ERROR");
+
+        const chat = chatContainer.read();
+        const dataContainer = { id: 1, posts: [] };
+        dataContainer.posts = chat;
+        const chatNormalizado = normalization(dataContainer);
+
+        socket.emit("chat", chatNormalizado);
+
+        socket.on("newChat", (data) => {
+          data.author.avatar = "avatar";
+          chatContainer.save(data);
+          // CHAT: TODO EL HISTORIAL. DATA: NUEVO POST GUARDADO
+          chat.push(data);
+          // DATACONTAINER: SE LE DA EL FORMATO PARA QUE SEA NORMALIZADO
+          dataContainer.posts = chat;
+          let dataNocomprimida = JSON.stringify(dataContainer).length;
+          let dataNormalized = normalization(dataContainer);
+          let dataComprimida = JSON.stringify(dataNormalized).length;
+          compression = compressionRatio(dataNocomprimida, dataComprimida);
+        });
+
+        try {
+          socket.emit("compression", compression);
+        } catch (error) {
+          let logger = log4js.getLogger("error");
+
+          logger.error("Error: En la Compresion del Chat");
+          console.log(error);
+        }
+      } catch (error) {
+        let logger = log4js.getLogger("error");
+
+        logger.error("Error: Hubo un error en la ruta del Chat");
+        console.log(error);
+      }
+    });
+
+    route.get("/productos", routes.postLogin, (req, res) => {
+      res.render("main");
+    });
+    route.post("/productos", routes.postLogin, (req, res) => {
+      res.render("main", { isUser: true });
+    });
+
+    // FILTRO Y CARRITO-----
+    let productFiltered = "FILTRO VACIO";
+    route.get("/filter", (req, res) => {
+      if (req.isAuthenticated()) {
+        // console.log( productos.getById(req.query.id))
+        let filter = productos.getById(req.query.id);
+        productFiltered = productos.getById(req.query.id);
+        let user = req.user;
+        res.render("carrito", {
+          Producto: productos.getById(req.params.num),
+          filter,
+          user: user,
+          isUser: true,
+        });
+      } else {
+        let logger = log4js.getLogger("error");
+        logger.error("Hubo un error en el Logeo");
+        res.redirect("login");
+      }
+    });
+
+    route.post("/filter", (req, res) => {
+      try {
+        carrito.saveCarrito(productFiltered);
+        let filter = productFiltered;
+        console.log(productFiltered);
+        let user = req.user;
+        res.render("postcarrito", {
+          Producto: productos.getById(req.params.num),
+          filter,
+          user: user,
+          isUser: true,
+        });
+      } catch (error) {
+        const msj = "No agregaste ningun producto";
+        console.log("ENTRO EL CATCH");
+        res.render("carrito", {
+          Producto: productos.getById(req.params.num),
+          msj,
+        });
+      }
+    });
+    const carrito = new CarritoDaosArchivos();
+
+    route.get("/tucarrito", (req, res) => {
+      if (req.isAuthenticated()) {
+        let Productos = carrito.read();
+        let user = req.user;
+        res.render("tuCarrito", {
+          Productos: carrito.read(),
+          user: user,
+          isUser: true,
+        });
+      } else {
+        let logger = log4js.getLogger("error");
+        logger.error("Hubo un error en el Logeo");
+        res.redirect("login");
+      }
+    });
+
+    route.get("/tuCompra", (req, res) => {
+      if (req.isAuthenticated()) {
+        let Productos = carrito.read();
+        let phoneUser = req.user.phonenumber;
+        let HTML = renderMsj(Productos, req.user.lastName);
+        let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
+        let HTMLSMSWAPADM = renderMsjWapAdministrator(
+          Productos,
+          req.user.lastName
+        );
+        let HTMLadministrator = renderMsjAdministrator(Productos, req.user);
+        let mailOptions = {
+          from: "Envio este correo desde mi App",
+          to: req.user.email,
+          // to: TEST_MAIL,
+          subject: `${req.user.lastName} muchas gracias por tu compra!`,
+          html: HTML,
+        };
+        let mailOptionsAdministrator = {
+          from: "Correo de control para el administrador",
+          to: TEST_MAIL,
+          subject: `${req.user.lastName} ${req.user.firstName} Ah realizado una compra`,
+          html: HTMLadministrator,
+        };
+        sendEmail("Se envio e-mail", mailOptions);
+        sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
+        sendWap(HTMLSMSWAP, phoneUser);
+        sendWapAdministrator(HTMLSMSWAPADM);
+        sendSms(HTMLSMSWAP, phoneUser);
+
+        res.render("tuCompra", {
+          Productos: carrito.read(),
+          email: req.user.email,
+          nombre: req.user.lastName,
+          phoneUser,
+        });
+      } else {
+        let logger = log4js.getLogger("error");
+        logger.error("Hubo un error en el Logeo");
+        res.redirect("login");
+      }
+    });
+
+    // ---------------------
+    route.get("/carrito", (req, res) => {
+      res.json({ Productos: carrito.read() });
+    });
+    route.get("/chat", routes.chatLogin, (req, res) => {
+      res.render("about", { isUser: true });
+    });
+    route.get("/test/:num", (req, res) => {
+      try {
+        res.json(productos.mocks(req.params.num));
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    route.get("/info", info);
+
+    route.get("/api/randoms", (req, res) => {
+      try {
+        let num = null;
+        if (req.query.cant == undefined) {
+          num = 100000000;
+        } else {
+          num = req.query.cant;
+        }
+        const child = fork("utils/ramdomsChild.js");
+        child.send(num);
+        child.on("message", (data) => {
+          try {
+            let mensaje = `Se han calculado en total, ${num} numeros:`;
+            let result = JSON.parse(data);
+            res.render("calculator", { mensaje, result });
+          } catch (error) {
+            console.log("ERROR");
+            console.log(error);
+          }
+        });
+      } catch (error) {
+        let logger = log4js.getLogger("errorConsole");
+
+        logger.error("Log Error");
+        console.log(error);
+      }
+    });
+
+    // FAIL ROUTE--------------------------------
+    route.get("*", (req, res) => {
+      const logger = log4js.getLogger("warn");
+      logger.warn("Warn:404. Usuario No logeado");
+      res.status(404).render("error", {});
+    });
+
     return route;
   }
 }
-
-module.exports = Routes;
+// module.exports = { SERVER, route };
+module.exports = Routes

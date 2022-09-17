@@ -1,6 +1,6 @@
 const { schema, normalize, denormalize } = require("normalizr");
 const util = require("util");
-const Data = require("..//routes/productRoute");
+const Data = require("..//routes/routes");
 
 // const data= Data.dataContainer
 // console.log(data);
