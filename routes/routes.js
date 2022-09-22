@@ -49,7 +49,7 @@ route.use(express.static("./public"));
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const routes = require("../utils/controler");
+// const routes = require("../utils/controler");
 const UserModel = require("../src/models/usuarios.js");
 const validatePass = require("../utils/passValidatos");
 const createHash = require("../utils/hashGenerator");
@@ -160,7 +160,7 @@ passport.serializeUser((user, callback) => {
 passport.deserializeUser((id, callback) => {
   UserModel.findById(id, callback);
 });
-
+const Controler = require('../utils/controler.js')
 const productos = new ProductosContainer();
 
 const chatContainer = new ChatContainer();
@@ -180,31 +180,33 @@ log4js.configure({
 });
 
 class Routes {
-  constructor() {}
+  constructor() {
+    this.controller = new Controler();
+  }
   start() {
     // INDEX--------------------------------
-    route.get("/", routes.getRoot);
+    route.get("/", this.controller.getRoot);
 
     // LOGIN--------------------------------
-    route.get("/login", routes.getLogin);
+    route.get("/login", this.controller.getLogin);
     route.post(
       "/login",
       passport.authenticate("login", { failureRedirect: "/failLogin" }),
-      routes.postLogin
+      this.controller.postLogin
     );
-    route.get("/failLogin", routes.getFaillogin);
+    route.get("/failLogin", this.controller.getFaillogin);
 
     // SIGNUP--------------------------------
-    route.get("/signUp", routes.getSignup);
+    route.get("/signUp", this.controller.getSignup);
     route.post(
       "/signUp",
       passport.authenticate("signup", { failureRedirect: "/failSingup" }),
-      routes.postSignup
+      this.controller.postSignup
     );
-    route.get("failSingup", routes.getFailsignup);
+    route.get("failSingup", this.controller.getFailsignup);
 
     // LOGOUT--------------------------------
-    route.get("/logout", routes.getLogout);
+    route.get("/logout", this.controller.getLogout);
 
     // PRODUCTOS - --------------------------------
     let compression = null;
@@ -268,55 +270,18 @@ class Routes {
       }
     });
 
-    route.get("/productos", routes.postLogin, (req, res) => {
+    route.get("/productos", this.controller.postLogin, (req, res) => {
       res.render("main");
     });
-    route.post("/productos", routes.postLogin, (req, res) => {
+    route.post("/productos", this.controller.postLogin, (req, res) => {
       res.render("main", { isUser: true });
     });
 
     // FILTRO Y CARRITO-----
-    let productFiltered = "FILTRO VACIO";
-    route.get("/filter", (req, res) => {
-      if (req.isAuthenticated()) {
-        // console.log( productos.getById(req.query.id))
-        let filter = productos.getById(req.query.id);
-        productFiltered = productos.getById(req.query.id);
-        let user = req.user;
-        res.render("carrito", {
-          Producto: productos.getById(req.params.num),
-          filter,
-          user: user,
-          isUser: true,
-        });
-      } else {
-        let logger = log4js.getLogger("error");
-        logger.error("Hubo un error en el Logeo");
-        res.redirect("login");
-      }
-    });
 
-    route.post("/filter", (req, res) => {
-      try {
-        carrito.saveCarrito(productFiltered);
-        let filter = productFiltered;
-        console.log(productFiltered);
-        let user = req.user;
-        res.render("postcarrito", {
-          Producto: productos.getById(req.params.num),
-          filter,
-          user: user,
-          isUser: true,
-        });
-      } catch (error) {
-        const msj = "No agregaste ningun producto";
-        console.log("ENTRO EL CATCH");
-        res.render("carrito", {
-          Producto: productos.getById(req.params.num),
-          msj,
-        });
-      }
-    });
+    route.get("/filter", this.controller.getFilter);
+
+    route.post("/filter", this.controller.postFilter);
     const carrito = new CarritoDaosArchivos();
 
     route.get("/tucarrito", (req, res) => {
@@ -382,9 +347,10 @@ class Routes {
     route.get("/carrito", (req, res) => {
       res.json({ Productos: carrito.read() });
     });
-    route.get("/chat", routes.chatLogin, (req, res) => {
+    route.get("/chat", this.controller.chatLogin, (req, res) => {
       res.render("about", { isUser: true });
     });
+
     route.get("/test/:num", (req, res) => {
       try {
         res.json(productos.mocks(req.params.num));
@@ -424,13 +390,12 @@ class Routes {
 
     // FAIL ROUTE--------------------------------
     route.get("*", (req, res) => {
-      const logger = log4js.getLogger("warn");
-      logger.warn("Warn:404. Usuario No logeado");
+
       res.status(404).render("error", {});
     });
 
     return route;
   }
 }
-// module.exports = { SERVER, route };
+
 module.exports = Routes
