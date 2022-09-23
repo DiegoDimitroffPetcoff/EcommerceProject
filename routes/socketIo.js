@@ -1,9 +1,20 @@
 const log4js = require("log4js");
 const { normalization } = require("../utils/normalizr");
-const ChatContainer = require("../src/daos/file/chatContainer");
-const ProductosContainer = require("../src/daos/file/productosContainer");
+
+// ---------------------------------PARA FILE BASE-------------------------------//
+// const ChatContainer = require("../src/daos/file/chatContainer");
+// const ProductosContainer = require("../src/daos/file/productosContainer");
+// const productos = new ProductosContainer();
+// const chatContainer = new ChatContainer();
+
+
+// ---------------------------------PARA MONGO ---------------------------------//
+const ChatContainer = require("../src/daos/mongodb/chatContainer");
+const ProductosContainer = require("../src/daos/mongodb/productosContainer");
 const productos = new ProductosContainer();
 const chatContainer = new ChatContainer();
+
+
 
 // PRODUCTOS - --------------------------------
 let compression = null;

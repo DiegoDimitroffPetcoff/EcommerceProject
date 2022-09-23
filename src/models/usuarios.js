@@ -1,6 +1,7 @@
+
 const mongoose = require('mongoose');
 
-const usuariosCollection = 'users-ecommerces';
+const usuariosCollection = 'usuarios';
 
 const UsuarioSchema = new mongoose.Schema({
     firstName: {type: String, required: true, max: 100},

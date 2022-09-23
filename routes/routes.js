@@ -7,7 +7,6 @@ const route = express();
 const SERVER = new HttpServer(route);
 const io = new IOServer(SERVER);
 
-
 const session = require("express-session");
 const log4js = require("log4js");
 
@@ -26,8 +25,6 @@ const chatContainer = new ChatContainer();
 // const util = require("util");
 // const { fakerCreate } = require("../utils/mocks");
 // const { normalization } = require("../utils/normalizr");
-
-
 
 const info = require("../utils/info");
 
@@ -155,8 +152,7 @@ passport.serializeUser((user, callback) => {
 passport.deserializeUser((id, callback) => {
   UserModel.findById(id, callback);
 });
-const Controler = require('../utils/controler.js')
-
+const Controler = require("../utils/controler.js");
 
 log4js.configure({
   appenders: {
@@ -201,69 +197,6 @@ class Routes {
     // LOGOUT--------------------------------
     route.get("/logout", this.controller.getLogout);
 
-    // --------------------------------------------------------SOCKET--------------------------------------------------------//
-     // --------------------------------------------------------SOCKET--------------------------------------------------------//
-    let compression = null;
-
-    io.on("connection", (socket) => {
-      try {
-        let prueba = productos.read();
-        socket.emit("messages", prueba);
-        socket.on("new-message", (data1) => {
-          productos.save(data1);
-          prueba.push(data1);
-
-          io.sockets.emit("messages", prueba);
-        });
-      } catch (error) {
-        let logger = log4js.getLogger("errorConsole");
-        logger.error("PROBANDO EL LOG DE ERROR");
-      }
-    });
-
-    // CHAT- ---------------------------------
-    io.on("connection", (socket) => {
-      try {
-        // SI QUITO EL COMENTARIO DE LAS LINEAS 192 Y 193 PUEDO OBSERVER QUE SE MUESTRA EN LA CONSOLA EL ERROR DE MANERA CORRECTA
-        // let logger = log4js.getLogger("error");
-        // logger.error("PROBANDO EL LOG DE ERROR");
-
-        const chat = chatContainer.read();
-        const dataContainer = { id: 1, posts: [] };
-        dataContainer.posts = chat;
-        const chatNormalizado = normalization(dataContainer);
-
-        socket.emit("chat", chatNormalizado);
-
-        socket.on("newChat", (data) => {
-          data.author.avatar = "avatar";
-          chatContainer.save(data);
-          // CHAT: TODO EL HISTORIAL. DATA: NUEVO POST GUARDADO
-          chat.push(data);
-          // DATACONTAINER: SE LE DA EL FORMATO PARA QUE SEA NORMALIZADO
-          dataContainer.posts = chat;
-          let dataNocomprimida = JSON.stringify(dataContainer).length;
-          let dataNormalized = normalization(dataContainer);
-          let dataComprimida = JSON.stringify(dataNormalized).length;
-          compression = compressionRatio(dataNocomprimida, dataComprimida);
-        });
-
-        try {
-          socket.emit("compression", compression);
-        } catch (error) {
-          let logger = log4js.getLogger("error");
-
-          logger.error("Error: En la Compresion del Chat");
-          console.log(error);
-        }
-      } catch (error) {
-        let logger = log4js.getLogger("error");
-
-        logger.error("Error: Hubo un error en la ruta del Chat");
-        console.log(error);
-      }
-    });
-
     route.get("/productos", this.controller.postLogin, (req, res) => {
       res.render("main");
     });
@@ -271,7 +204,7 @@ class Routes {
       res.render("main", { isUser: true });
     });
 
-    // FILTRO Y CARRITO-----
+    // FITER--------------------------------
 
     route.get("/filter", this.controller.getFilter);
 
@@ -281,22 +214,13 @@ class Routes {
     route.get("/tucarrito", this.controller.tucarrito);
 
     route.get("/tuCompra", this.controller.tuCompra);
-   
-    route.get("/carrito", this.controller.carrito)
+
+    route.get("/carrito", this.controller.carrito);
 
     route.get("/chat", this.controller.chatLogin);
 
-
-  // --------------------------------------------------------SOCKET--------------------------------------------------------//
-  // --------------------------------------------------------SOCKET--------------------------------------------------------//
-
-
-
-
-
-
-
     route.get("/test/:num", this.controller.test);
+   
     route.get("/info", info);
 
     route.get("/api/randoms", (req, res) => {
@@ -329,7 +253,6 @@ class Routes {
 
     // FAIL ROUTE--------------------------------
     route.get("*", (req, res) => {
-
       res.status(404).render("error", {});
     });
 
@@ -337,4 +260,4 @@ class Routes {
   }
 }
 
-module.exports = Routes
+module.exports = Routes;
