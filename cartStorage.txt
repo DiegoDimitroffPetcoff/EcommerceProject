@@ -120,5 +120,11 @@
 		"price": 8641,
 		"id": 24,
 		"Timestamp": "Fri Sep 23 2022 04:26:32 GMT-0300 (hora estándar de Argentina)1663917992404"
+	},
+	{
+		"title": "casa",
+		"price": "12398",
+		"id": 25,
+		"Timestamp": "Fri Sep 23 2022 11:43:53 GMT-0300 (hora estándar de Argentina)1663944233803"
 	}
 ]
