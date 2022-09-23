@@ -3,7 +3,7 @@ const log4js = require("log4js");
 
 const ACCOUNT_SID = process.env.ACCOUNT_SID ||"AC724bf3286d819b5394424987b2a5d668";
 const AUTH_TOKEN = process.env.AUTH_TOKEN ||"7f013dc2d7bc96ab5bcbd1ca37baaac0";
-const ADMINISTRATOR_NUMBER = process.env.ADMINISTRATOR_NUMBER ||'whatsapp:+46734763187'
+const ADMINISTRATOR_NUMBER = process.env.ADMINISTRATOR_NUMBER ||'whatsapp:+351935828293'
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 async function sendSms(msj, client) {

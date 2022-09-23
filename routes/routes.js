@@ -6,7 +6,7 @@ const route = express();
 
 const SERVER = new HttpServer(route);
 const io = new IOServer(SERVER);
-const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
+
 
 const session = require("express-session");
 const log4js = require("log4js");
@@ -20,19 +20,14 @@ faker.locale = "es";
 
 const ChatContainer = require("../src/daos/file/chatContainer");
 const ProductosContainer = require("../src/daos/file/productosContainer");
-const CarritoDaosArchivos = require("../src/daos/file/carritoContainer");
+const productos = new ProductosContainer();
+const chatContainer = new ChatContainer();
 
 // const util = require("util");
 // const { fakerCreate } = require("../utils/mocks");
-const { normalization } = require("../utils/normalizr");
-const {
-  sendEmail,
-  renderMsj,
-  renderMsjAdministrator,
-  renderMsjSmsWap,
-  renderMsjWapAdministrator,
-} = require("../utils/mailSignup");
-const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
+// const { normalization } = require("../utils/normalizr");
+
+
 
 const info = require("../utils/info");
 
@@ -161,9 +156,7 @@ passport.deserializeUser((id, callback) => {
   UserModel.findById(id, callback);
 });
 const Controler = require('../utils/controler.js')
-const productos = new ProductosContainer();
 
-const chatContainer = new ChatContainer();
 
 log4js.configure({
   appenders: {
@@ -208,7 +201,8 @@ class Routes {
     // LOGOUT--------------------------------
     route.get("/logout", this.controller.getLogout);
 
-    // PRODUCTOS - --------------------------------
+    // --------------------------------------------------------SOCKET--------------------------------------------------------//
+     // --------------------------------------------------------SOCKET--------------------------------------------------------//
     let compression = null;
 
     io.on("connection", (socket) => {
@@ -282,82 +276,27 @@ class Routes {
     route.get("/filter", this.controller.getFilter);
 
     route.post("/filter", this.controller.postFilter);
-    const carrito = new CarritoDaosArchivos();
+    // const carrito = new CarritoDaosArchivos();
 
-    route.get("/tucarrito", (req, res) => {
-      if (req.isAuthenticated()) {
-        let Productos = carrito.read();
-        let user = req.user;
-        res.render("tuCarrito", {
-          Productos: carrito.read(),
-          user: user,
-          isUser: true,
-        });
-      } else {
-        let logger = log4js.getLogger("error");
-        logger.error("Hubo un error en el Logeo");
-        res.redirect("login");
-      }
-    });
+    route.get("/tucarrito", this.controller.tucarrito);
 
-    route.get("/tuCompra", (req, res) => {
-      if (req.isAuthenticated()) {
-        let Productos = carrito.read();
-        let phoneUser = req.user.phonenumber;
-        let HTML = renderMsj(Productos, req.user.lastName);
-        let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
-        let HTMLSMSWAPADM = renderMsjWapAdministrator(
-          Productos,
-          req.user.lastName
-        );
-        let HTMLadministrator = renderMsjAdministrator(Productos, req.user);
-        let mailOptions = {
-          from: "Envio este correo desde mi App",
-          to: req.user.email,
-          // to: TEST_MAIL,
-          subject: `${req.user.lastName} muchas gracias por tu compra!`,
-          html: HTML,
-        };
-        let mailOptionsAdministrator = {
-          from: "Correo de control para el administrador",
-          to: TEST_MAIL,
-          subject: `${req.user.lastName} ${req.user.firstName} Ah realizado una compra`,
-          html: HTMLadministrator,
-        };
-        sendEmail("Se envio e-mail", mailOptions);
-        sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
-        sendWap(HTMLSMSWAP, phoneUser);
-        sendWapAdministrator(HTMLSMSWAPADM);
-        sendSms(HTMLSMSWAP, phoneUser);
+    route.get("/tuCompra", this.controller.tuCompra);
+   
+    route.get("/carrito", this.controller.carrito)
 
-        res.render("tuCompra", {
-          Productos: carrito.read(),
-          email: req.user.email,
-          nombre: req.user.lastName,
-          phoneUser,
-        });
-      } else {
-        let logger = log4js.getLogger("error");
-        logger.error("Hubo un error en el Logeo");
-        res.redirect("login");
-      }
-    });
+    route.get("/chat", this.controller.chatLogin);
 
-    // ---------------------
-    route.get("/carrito", (req, res) => {
-      res.json({ Productos: carrito.read() });
-    });
-    route.get("/chat", this.controller.chatLogin, (req, res) => {
-      res.render("about", { isUser: true });
-    });
 
-    route.get("/test/:num", (req, res) => {
-      try {
-        res.json(productos.mocks(req.params.num));
-      } catch (err) {
-        console.log(err);
-      }
-    });
+  // --------------------------------------------------------SOCKET--------------------------------------------------------//
+  // --------------------------------------------------------SOCKET--------------------------------------------------------//
+
+
+
+
+
+
+
+    route.get("/test/:num", this.controller.test);
     route.get("/info", info);
 
     route.get("/api/randoms", (req, res) => {

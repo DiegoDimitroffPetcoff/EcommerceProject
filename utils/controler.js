@@ -1,12 +1,20 @@
 const log4js = require("log4js");
-const ProductosContainer = require("../src/daos/file/productosContainer");
-const productos = new ProductosContainer();
+
 const ApiService = require("../src/service/service.File");
 const api = new ApiService();
 
-const CarritoDaosArchivos = require("../src/daos/file/carritoContainer");
-const carrito = new CarritoDaosArchivos();
 const Api = require("twilio/lib/rest/Api");
+
+const {
+  sendEmail,
+  renderMsj,
+  renderMsjAdministrator,
+  renderMsjSmsWap,
+  renderMsjWapAdministrator,
+} = require("../utils/mailSignup");
+const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
+
+const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
 
 let productFiltered = "FILTRO VACIO";
 
@@ -89,11 +97,12 @@ class Controllers {
     res.render("failSignup", {});
   }
 
+  // FILTER---------------------------
   getFilter(req, res) {
     if (req.isAuthenticated()) {
       productFiltered = api.getFilter(req.query.id);
       res.render("carrito", {
-        Producto: productos.getById(req.params.num),
+        Producto: api.getFilter(req.params.num),
         filter: productFiltered,
         user: req.user,
         isUser: true,
@@ -107,10 +116,10 @@ class Controllers {
 
   postFilter(req, res) {
     try {
-      carrito.saveCarrito(productFiltered);
+      api.postFilter(productFiltered);
 
       res.render("postcarrito", {
-        Producto: productos.getById(req.params.num),
+        Producto: api.getFilter(req.params.num),
         filter: productFiltered,
         user: req.user,
         isUser: true,
@@ -119,9 +128,23 @@ class Controllers {
       const msj = "No agregaste ningun producto";
       console.log("ENTRO EL CATCH");
       res.render("carrito", {
-        Producto: productos.getById(req.params.num),
+        Producto: api.getFilter(req.params.num),
         msj,
       });
+    }
+  }
+
+  tucarrito(req, res) {
+    if (req.isAuthenticated()) {
+      res.render("tuCarrito", {
+        Productos: api.tuCarrito(),
+        user: req.user,
+        isUser: true,
+      });
+    } else {
+      let logger = log4js.getLogger("error");
+      logger.error("Hubo un error en el Logeo");
+      res.redirect("login");
     }
   }
 
@@ -137,6 +160,67 @@ class Controllers {
       }
     });
   }
+
+  tuCompra(req, res) {
+    if (req.isAuthenticated()) {
+      let Productos = api.tuCarrito();
+      let phoneUser = req.user.phonenumber;
+      let HTML = renderMsj(Productos, req.user.lastName);
+      let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
+      let HTMLSMSWAPADM = renderMsjWapAdministrator(
+        Productos,
+        req.user.lastName
+      );
+      let HTMLadministrator = renderMsjAdministrator(Productos, req.user);
+      let mailOptions = {
+        from: "Envio este correo desde mi App",
+
+        // -----MODO PRUEBA: TEST_MAIL--------//
+        // to: req.user.email,
+        to: TEST_MAIL,
+        // ----------------------------------//
+
+        subject: `${req.user.lastName} muchas gracias por tu compra!`,
+        html: HTML,
+      };
+      let mailOptionsAdministrator = {
+        from: "Correo de control para el administrador",
+        to: TEST_MAIL,
+        subject: `${req.user.lastName} ${req.user.firstName} Ah realizado una compra`,
+        html: HTMLadministrator,
+      };
+      sendEmail("Se envio e-mail", mailOptions);
+      sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
+      sendWap(HTMLSMSWAP, phoneUser);
+      sendWapAdministrator(HTMLSMSWAPADM);
+      sendSms(HTMLSMSWAP, phoneUser);
+
+      res.render("tuCompra", {
+        Productos: api.tuCarrito(),
+        email: req.user.email,
+        nombre: req.user.lastName,
+        phoneUser,
+      });
+    } else {
+      let logger = log4js.getLogger("error");
+      logger.error("Hubo un error en el Logeo");
+      res.redirect("login");
+    }
+  }
+
+  carrito(req, res) {
+    res.json({ Productos: api.tuCarrito() });
+  };
+
+  test(req, res)  {
+    try {
+      res.json(api.test(req.params.num));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  
 }
 
 // CHILD CONTROLER---------------------------
@@ -162,14 +246,3 @@ class Controllers {
 // }
 
 module.exports = Controllers;
-
-// ATENCION!!! VER FILTER
-// filter(req, res) {
-//   // console.log( productos.getById(req.query.id))
-//   let filter = productos.getById(req.query.id);
-//   productFiltered = productos.getById(req.query.id);
-//   res.render("carrito", {
-//     Producto: productos.getById(req.params.num),
-//     filter,
-//   });
-// }
