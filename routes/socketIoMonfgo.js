@@ -1,16 +1,12 @@
 const log4js = require("log4js");
 
-
-// ---------------------------------PARA FILE BASE-------------------------------//
-const ChatContainer = require("../src/daos/file/chatContainer");
-const ProductosContainer = require("../src/daos/file/productosContainer");
+// ---------------------------------PARA MONGO ---------------------------------//
+const ChatContainer = require("../src/daos/mongodb/chatContainer");
+const ProductosContainer = require("../src/daos/mongodb/productosContainer");
 const productos = new ProductosContainer();
 const chatContainer = new ChatContainer();
-const { normalization } = require("../utils/normalizr");
+// const { normalization } = require("../utils/normalizrMongo");
 const compressionRatio = require("../utils/calculator");
-
-
-
 
 // PRODUCTOS - --------------------------------
 let compression = null;
@@ -34,15 +30,15 @@ module.exports = function (io) {
 
   // // CHAT- ---------------------------------
 
-  io.on("connection", async(socket) => {
+  io.on("connection", async (socket) => {
     try {
       const chat = await chatContainer.read();
- 
+
       const dataContainer = { id: 1, posts: [] };
       dataContainer.posts = chat;
-      const chatNormalizado = normalization(dataContainer);
 
-      socket.emit("chat", chatNormalizado);    
+      socket.emit("chatMongo", dataContainer);
+
       socket.on("newChat", (data) => {
         data.author.avatar = "avatar";
         chatContainer.save(data);
@@ -71,5 +67,4 @@ module.exports = function (io) {
       console.log(error);
     }
   });
-
 };

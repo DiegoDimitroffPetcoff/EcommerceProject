@@ -1,11 +1,13 @@
-const fs = require("fs");
+
 const Contenedor = require("../../container/mongo/container");
+const Schema = require('../../models/productos')
 const {MockProduct} = require("../../../utils/mocks");
 
 
 class ProductosContainer extends Contenedor {
   constructor() {
-    super("./productos.txt");
+    super(Schema);
+    this.model = Schema;
   }
 
   mocks(amount) {

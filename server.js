@@ -33,7 +33,7 @@ app.set("views", "./views");
 // PORT--------------------------------------------------//
 const configs = require("./src/config/globals");
 const PORT = configs.PORT
-const MODO = process.argv[3] || "fork";
+const MODO = process.argv[4] || "fork";
 
 // DATA BASE CONNECTION----------------------------------//
 const Factory = require("./src/factory/factory");
@@ -44,8 +44,11 @@ DBS.connection(DBSChosen);
 // ROUTES CONNECTION-------------------------------------//
 const routes = require("./routes/routes");
 const Route = new routes();
-app.use(Route.start());
-require("./routes/socketIo")(io);
+app.use(Route.start())
+
+const activaIOS = require('./activa.js')
+activaIOS(io, DBSChosen)
+
 
 // INICIALIZATION SERVER- MOOD FORK OR CLUSTER-----------//
 const cluster = require("cluster");

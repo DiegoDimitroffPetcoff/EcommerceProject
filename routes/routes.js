@@ -5,7 +5,6 @@ const { Server: IOServer } = require("socket.io");
 const route = express();
 
 const SERVER = new HttpServer(route);
-const io = new IOServer(SERVER);
 
 const session = require("express-session");
 const log4js = require("log4js");
@@ -13,23 +12,15 @@ const log4js = require("log4js");
 // const MongoStore = require("connect-mongo");
 const ramdomsChild = require("../utils/ramdomsChild");
 const { fork } = require("child_process");
-// const compressionModule = require('compression');
+
 const faker = require("faker");
 faker.locale = "es";
-
-const ChatContainer = require("../src/daos/file/chatContainer");
-const ProductosContainer = require("../src/daos/file/productosContainer");
-const productos = new ProductosContainer();
-const chatContainer = new ChatContainer();
 
 // const util = require("util");
 // const { fakerCreate } = require("../utils/mocks");
 // const { normalization } = require("../utils/normalizr");
 
 const info = require("../utils/info");
-
-const compressionRatio = require("../utils/calculator");
-// const userLogged = require("../utils/sessions");
 
 const fs = require("fs");
 // const { response } = require("express");
@@ -220,7 +211,7 @@ class Routes {
     route.get("/chat", this.controller.chatLogin);
 
     route.get("/test/:num", this.controller.test);
-   
+
     route.get("/info", info);
 
     route.get("/api/randoms", (req, res) => {

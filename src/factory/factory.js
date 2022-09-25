@@ -10,13 +10,20 @@ class Factory {
     if (!instance) {
       instance = new Factory();
       if (data == "mongo" || data == "file") {
-        console.log(`Se activa Factory con ${data}`);
+        console.log(`Base de datos utilizada: ${data}`);
       }
     }
     return instance;
   }
   connection(data) {
     if (data == "file") {
+
+      mongoose.connect(configs.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+
+
     } else if (data == "mongo") {
       mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,

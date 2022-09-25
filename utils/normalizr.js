@@ -2,10 +2,11 @@ const { schema, normalize, denormalize } = require("normalizr");
 const util = require("util");
 const Data = require("..//routes/routes");
 
-// const data= Data.dataContainer
-// console.log(data);
 
+const print = require('../utils/print')
 function normalization(params) {
+  let object = params;
+
   const authorSchema = new schema.Entity(
     "E-mail",
     {},
@@ -18,7 +19,8 @@ function normalization(params) {
     posts: [postSchema],
   });
 
-  const normalicedBlog = normalize(params, dataSchema);
+  const normalicedBlog = normalize(object, dataSchema);
+ 
   return normalicedBlog;
 }
 

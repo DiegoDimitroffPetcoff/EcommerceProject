@@ -1,6 +1,5 @@
 const socket = io.connect();
 
-
 // --------------------
 function fixNumber(x) {
   return Number.parseFloat(x).toFixed(2);
@@ -12,9 +11,8 @@ function renderCompression(data) {
   document.getElementById("compression").innerHTML = html;
 }
 function renderChat(data) {
- 
-  const html = data.posts.map((elem, index) => {
-    
+  const html = data.posts
+    .map((elem, index) => {
       let fecha = new Date();
 
       let dia = fecha.getDate();
@@ -51,8 +49,7 @@ function addMessagechat(e) {
   return false;
 }
 
-socket.on("chat", (data) => { 
-  
+socket.on("chat", (data) => {
   try {
     let authorSchema = new normalizr.schema.Entity(
       "E-mail",
@@ -81,21 +78,21 @@ socket.on("chat", (data) => {
   }
 });
 
-socket.on("compression", data => {
-  console.log(data);
-  if (data == null) {
-  
-    renderCompression(0)
-
-  } else {
-    let dataFixed= fixNumber(data)
-    renderCompression(dataFixed)
-    
+socket.on("chatMongo", (data) => {
+  try {
+    renderChat(data);
+  } catch (error) {
+    console.log("ERROR - NO FUNCIONA");
+    console.log(error);
   }
+});
 
-    });
-
-  
-    
-    
-
+socket.on("compression", (data) => {
+  // console.log(data);
+  if (data == null) {
+    renderCompression(0);
+  } else {
+    let dataFixed = fixNumber(data);
+    renderCompression(dataFixed);
+  }
+});

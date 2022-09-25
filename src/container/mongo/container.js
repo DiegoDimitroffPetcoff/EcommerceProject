@@ -1,8 +1,6 @@
-const fs = require("fs");
-
 class Contenedor {
-  constructor(fileName) {
-    this.route = fileName;
+  constructor(Schema) {
+    this.Schema = Schema;
   }
 
   idLector() {
@@ -14,13 +12,13 @@ class Contenedor {
     return id;
   }
 
-  read() {
+  async read() {
     try {
-      let readFinal = fs.readFileSync(this.route, "utf-8");
-      let allProducts = JSON.parse(readFinal);
-      return allProducts;
+      // let toRead = await this.Schema.find({});
+      // console.log (toRead)
+      return await this.Schema.find({},{_id:0});
     } catch (error) {
-      console.log(`Error en la lectura del archivo: ${error}`);
+      console.log(error);
     }
   }
 
