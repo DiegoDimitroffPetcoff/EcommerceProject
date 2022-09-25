@@ -1,15 +1,15 @@
 const express = require("express");
-const { Server: HttpServer } = require("http");
-const { Server: IOServer } = require("socket.io");
+// const { Server: HttpServer } = require("http");
+// const { Server: IOServer } = require("socket.io");
 
 const route = express();
 
-const SERVER = new HttpServer(route);
+// const SERVER = new HttpServer(route);
 
 const session = require("express-session");
 const log4js = require("log4js");
 
-// const MongoStore = require("connect-mongo");
+
 const ramdomsChild = require("../utils/ramdomsChild");
 const { fork } = require("child_process");
 
@@ -22,8 +22,7 @@ faker.locale = "es";
 
 const info = require("../utils/info");
 
-const fs = require("fs");
-// const { response } = require("express");
+
 
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
@@ -166,7 +165,7 @@ class Routes {
   start() {
     // INDEX--------------------------------
     route.get("/", this.controller.getRoot);
-
+    route.post("/", this.controller.getRoot);
     // LOGIN--------------------------------
     route.get("/login", this.controller.getLogin);
     route.post(
@@ -200,7 +199,7 @@ class Routes {
     route.get("/filter", this.controller.getFilter);
 
     route.post("/filter", this.controller.postFilter);
-    // const carrito = new CarritoDaosArchivos();
+
 
     route.get("/tucarrito", this.controller.tucarrito);
 

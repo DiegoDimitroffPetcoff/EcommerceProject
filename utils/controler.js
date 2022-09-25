@@ -1,9 +1,20 @@
 const log4js = require("log4js");
 
-const ApiService = require("../src/service/service.File");
-const api = new ApiService();
 
-const Api = require("twilio/lib/rest/Api");
+
+// REDIRECCIONADOR DEL CONTROLLER SEGUN BASE DE DATOS UTILIZADA--------------------------------------//
+const dbsController = process.argv[2] || "mongo";
+function dbsContr() {
+  if (dbsController == "mongo") {
+    console.log("// MONGO--------------------------------------//");
+     ApiService = require("../src/service/serviceMongo");    
+  } 
+}
+
+let ApiService = require("../src/service/service.File");
+const api = new ApiService();
+dbsContr()
+// ----------------------------------------------------------------------------------------------------//
 
 const {
   sendEmail,
@@ -98,12 +109,11 @@ class Controllers {
   }
 
   // FILTER---------------------------
-  getFilter(req, res) {
+  async getFilter(req, res) {
     if (req.isAuthenticated()) {
-      productFiltered = api.getFilter(req.query.id);
       res.render("carrito", {
-        Producto: api.getFilter(req.params.num),
-        filter: productFiltered,
+        Producto: await api.getFilter(req.query.id),
+        filter: await api.getFilter(req.query.id),
         user: req.user,
         isUser: true,
       });
@@ -116,8 +126,9 @@ class Controllers {
 
   postFilter(req, res) {
     try {
+      console.log(productFiltered);
       api.postFilter(productFiltered);
-
+      console.log(req.params.num);
       res.render("postcarrito", {
         Producto: api.getFilter(req.params.num),
         filter: productFiltered,
@@ -210,17 +221,15 @@ class Controllers {
 
   carrito(req, res) {
     res.json({ Productos: api.tuCarrito() });
-  };
+  }
 
-  test(req, res)  {
+  test(req, res) {
     try {
       res.json(api.test(req.params.num));
     } catch (err) {
       console.log(err);
     }
   }
-
-  
 }
 
 // CHILD CONTROLER---------------------------

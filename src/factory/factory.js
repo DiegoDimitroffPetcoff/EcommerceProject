@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { TaskChannelList } = require("twilio/lib/rest/taskrouter/v1/workspace/taskChannel");
 
 const configs = require("../config/globals");
 
@@ -16,7 +17,10 @@ class Factory {
     return instance;
   }
   connection(data) {
+
+
     if (data == "file") {
+    
 
       mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,
@@ -25,6 +29,8 @@ class Factory {
 
 
     } else if (data == "mongo") {
+
+      
       mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -33,6 +39,9 @@ class Factory {
       console.log("Error en conexion de base de datos");
     }
   }
+
+
+  
 }
 
 module.exports = Factory;

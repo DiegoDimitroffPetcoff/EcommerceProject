@@ -1,6 +1,6 @@
 [
 	{
-		"title": "Pantalones",
+		"title": "Pantalones :D",
 		"price": 3386,
 		"id": 1
 	},
