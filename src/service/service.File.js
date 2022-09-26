@@ -16,6 +16,7 @@ class ApiService {
     return this.carrito.saveCarrito(data);
   }
   tuCarrito(){
+    console.log(this.carrito.read());
     return this.carrito.read();
   }
   test(data){

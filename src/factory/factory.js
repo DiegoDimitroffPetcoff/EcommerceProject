@@ -17,12 +17,8 @@ class Factory {
     return instance;
   }
   connection(data) {
-
-
     if (data == "file") {
-    
-
-      mongoose.connect(configs.MONGO_URI, {
+    mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });

@@ -3,17 +3,13 @@ const log4js = require("log4js");
 
 
 // REDIRECCIONADOR DEL CONTROLLER SEGUN BASE DE DATOS UTILIZADA--------------------------------------//
-const dbsController = process.argv[2] || "mongo";
-function dbsContr() {
-  if (dbsController == "mongo") {
-    console.log("// MONGO--------------------------------------//");
-     ApiService = require("../src/service/serviceMongo");    
-  } 
-}
+const ApiServiceF = require("../src/service/service.File");
+const ApiServiceM = require("../src/service/serviceMongo");
+const api = new ApiServiceM();
+// const api = new ApiServiceF();
 
-let ApiService = require("../src/service/service.File");
-const api = new ApiService();
-dbsContr()
+
+
 // ----------------------------------------------------------------------------------------------------//
 
 const {
@@ -24,7 +20,6 @@ const {
   renderMsjWapAdministrator,
 } = require("../utils/mailSignup");
 const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
-
 const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
 
 let productFiltered = "FILTRO VACIO";
@@ -108,9 +103,16 @@ class Controllers {
     res.render("failSignup", {});
   }
 
+
+
+
+  
   // FILTER---------------------------
   async getFilter(req, res) {
     if (req.isAuthenticated()) {
+   
+      // PRODUCTFILTERED TIENE QUE QUEDAR DEFINIDO PARA EL MOMENTO DEL POST
+      productFiltered = await api.getFilter(req.query.id)
       res.render("carrito", {
         Producto: await api.getFilter(req.query.id),
         filter: await api.getFilter(req.query.id),
@@ -123,32 +125,32 @@ class Controllers {
       res.redirect("login");
     }
   }
-
-  postFilter(req, res) {
+  async postFilter(req, res) {
     try {
-      console.log(productFiltered);
-      api.postFilter(productFiltered);
-      console.log(req.params.num);
+
+      await api.postFilter(productFiltered);
       res.render("postcarrito", {
-        Producto: api.getFilter(req.params.num),
+        Producto: await api.getFilter(req.params.num),
         filter: productFiltered,
         user: req.user,
         isUser: true,
       });
     } catch (error) {
       const msj = "No agregaste ningun producto";
+
       console.log("ENTRO EL CATCH");
+      console.log(error);
       res.render("carrito", {
-        Producto: api.getFilter(req.params.num),
+        Producto: await api.getFilter(req.params.num),
         msj,
       });
     }
   }
 
-  tucarrito(req, res) {
+ async tucarrito(req, res) {
     if (req.isAuthenticated()) {
       res.render("tuCarrito", {
-        Productos: api.tuCarrito(),
+        Productos: await api.tuCarrito(),
         user: req.user,
         isUser: true,
       });
@@ -158,6 +160,10 @@ class Controllers {
       res.redirect("login");
     }
   }
+
+
+
+
 
   // LOG OUT---------------------------
   getLogout(req, res) {
@@ -232,26 +238,6 @@ class Controllers {
   }
 }
 
-// CHILD CONTROLER---------------------------
-// function randomsControler(req, res)  {
-//   let num = null;
-//   if (req.query.cant == undefined) {
-//     num = 100000;
-//   } else {
-//     num = req.query.cant;
-//   }
-//   const child = fork("utils/ramdomsChild.js");
-//   child.send(num);
-//   child.on("message", (data) => {
-//     try {
-//       let mensaje = `Se han calculado ${num} de numeros:`;
-//       let result = JSON.parse(data);
-//       res.json({ mensaje, result });
-//     } catch (error) {
-//       console.log("ERROR");
-//       console.log(error);
-//     }
-//   });
-// }
+
 
 module.exports = Controllers;

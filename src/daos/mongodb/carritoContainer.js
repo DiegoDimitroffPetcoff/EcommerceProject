@@ -1,42 +1,22 @@
-// const fs = require("fs");
-// const express = require("express");
-// const app = express();
-// const { Router } = express
-// const carritoRouter = Router()
-// app.use(express.static("public"));
-// app.use("/static", express.static(__dirname + "/public"));
-
-// const { ContenedorArchivo } = require("../../contenedores/contenedorArchivos");
-const fs = require("fs");
-const Contenedor = require("../../container/file/container");
+const Contenedor = require("../../container/mongo/container");
+const Schema = require("../../models/carrito.js");
 
 class CarritoDaosArchivos extends Contenedor {
   constructor() {
-    super("./cartStorage.txt");
+    super(Schema);
+    this.Schema = Schema;
   }
-  saveCarrito(x) {
-    let array = [];
-    let object = x;
 
+  async saveCarrito(content) {
+    let obj = { title: content.title, price: content.price, id: content.id };
     try {
-      let data = fs.readFileSync("./cartStorage.txt", "utf-8");
-      
-      array = JSON.parse(data);
-    } catch {
-      console.log("catch error");
+      let createModel = new this.Schema(obj);
+      return await createModel.save();
+    } catch (err) {
+      console.log("EL ERROR ES");
+      console.log(err);
     }
-    object.id = array.length + 1;
-    // object.timestamp = new Date();
-    object.Timestamp = new Date();
-    object.Timestamp += object.Timestamp.getTime();
-    array.push(object);
-
-    let lastId = array.length + 1; 
-    fs.writeFileSync(this.route, JSON.stringify(array, null, "\t"));
-    this.id = lastId++;
-    return object;
   }
 }
-
 
 module.exports = CarritoDaosArchivos;

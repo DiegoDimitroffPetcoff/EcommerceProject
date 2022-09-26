@@ -20,9 +20,6 @@ class Contenedor {
     }
   }
 
-  save(content) {
-
-  }
 
   async getById(x) {
     try {
@@ -33,6 +30,17 @@ class Contenedor {
     }
     return object;
   }
+
+  async Delete(element){
+   return await this.Schema.deleteOne(element)
+  }
+
+  async Update(id){
+    return await this.Schema.updateOne({
+      id:id},
+      {$set:{title: "nuevo Titulo"}}
+      )
+   }
 }
 
 module.exports = Contenedor;

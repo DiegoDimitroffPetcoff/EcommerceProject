@@ -21,7 +21,26 @@ module.exports = function (io) {
         prueba.push(data1);
 
         io.sockets.emit("messages", prueba);
+
       });
+      socket.on ('delete',async (data)=>{
+      
+        let dataDeleted = await productos.getById(data)
+        let objDelete = await productos.Delete(await productos.getById(data));
+        io.sockets.emit("messagesDelete",(dataDeleted) );   
+        
+      })
+
+      socket.on ('edit',async (data)=>{
+      
+        let dataEdited = await productos.getById(data)
+        let objEdited = await productos.Update(dataEdited.id);
+        io.sockets.emit("messagesEdited",(dataEdited) );   
+        
+      })
+
+
+
     } catch (error) {
       let logger = log4js.getLogger("errorConsole");
       logger.error("PROBANDO EL LOG DE ERROR");

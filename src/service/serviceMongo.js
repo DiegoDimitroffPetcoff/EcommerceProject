@@ -12,11 +12,12 @@ class ApiService {
     return this.productos.getById(data);
   }
 
-  postFilter(data) {
-    return this.carrito.saveCarrito(data);
+  async postFilter(data) {
+    return await this.carrito.saveCarrito(data);
   }
-  tuCarrito(){
-    return this.carrito.read();
+  async tuCarrito(){
+  
+    return await this.carrito.read();
   }
   test(data){
     return this.productos.mocks(data)

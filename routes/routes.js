@@ -1,10 +1,5 @@
 const express = require("express");
-// const { Server: HttpServer } = require("http");
-// const { Server: IOServer } = require("socket.io");
-
 const route = express();
-
-// const SERVER = new HttpServer(route);
 
 const session = require("express-session");
 const log4js = require("log4js");
@@ -15,10 +10,6 @@ const { fork } = require("child_process");
 
 const faker = require("faker");
 faker.locale = "es";
-
-// const util = require("util");
-// const { fakerCreate } = require("../utils/mocks");
-// const { normalization } = require("../utils/normalizr");
 
 const info = require("../utils/info");
 
@@ -163,10 +154,11 @@ class Routes {
     this.controller = new Controler();
   }
   start() {
-    // INDEX--------------------------------
+    // --------------------------------INDEX--------------------------------//
     route.get("/", this.controller.getRoot);
     route.post("/", this.controller.getRoot);
-    // LOGIN--------------------------------
+
+    // --------------------------------LOGIN--------------------------------//
     route.get("/login", this.controller.getLogin);
     route.post(
       "/login",
@@ -175,7 +167,7 @@ class Routes {
     );
     route.get("/failLogin", this.controller.getFaillogin);
 
-    // SIGNUP--------------------------------
+    // --------------------------------SIGNUP--------------------------------//
     route.get("/signUp", this.controller.getSignup);
     route.post(
       "/signUp",
@@ -184,9 +176,8 @@ class Routes {
     );
     route.get("failSingup", this.controller.getFailsignup);
 
-    // LOGOUT--------------------------------
+    // --------------------------------LOGOUT--------------------------------//
     route.get("/logout", this.controller.getLogout);
-
     route.get("/productos", this.controller.postLogin, (req, res) => {
       res.render("main");
     });
@@ -194,25 +185,15 @@ class Routes {
       res.render("main", { isUser: true });
     });
 
-    // FITER--------------------------------
-
+    // --------------------------------FITER--------------------------------//
     route.get("/filter", this.controller.getFilter);
-
     route.post("/filter", this.controller.postFilter);
-
-
     route.get("/tucarrito", this.controller.tucarrito);
-
     route.get("/tuCompra", this.controller.tuCompra);
-
     route.get("/carrito", this.controller.carrito);
-
     route.get("/chat", this.controller.chatLogin);
-
     route.get("/test/:num", this.controller.test);
-
     route.get("/info", info);
-
     route.get("/api/randoms", (req, res) => {
       try {
         let num = null;
@@ -241,7 +222,7 @@ class Routes {
       }
     });
 
-    // FAIL ROUTE--------------------------------
+    // --------------------------------FAIL ROUTE--------------------------------//
     route.get("*", (req, res) => {
       res.status(404).render("error", {});
     });
