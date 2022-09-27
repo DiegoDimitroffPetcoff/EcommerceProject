@@ -216,8 +216,8 @@ class Controllers {
         from: "Envio este correo desde mi App",
 
         // -----MODO PRUEBA: TEST_MAIL--------//
-        // to: req.user.email,
-        to: TEST_MAIL,
+        to: req.user.email,
+        // to: TEST_MAIL,
         // ----------------------------------//
 
         subject: `${req.user.lastName} muchas gracias por tu compra!`,
