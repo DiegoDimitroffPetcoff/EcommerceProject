@@ -30,7 +30,7 @@ function render(data) {
   const id = data
     .map((elem, index) => {
       return `<div><button type="button" class="btn btn-light my-1" onClick="filterFunction(${elem.id})">Select</button> 
-                  <button type="button" class="btn btn-light my-1" onClick="edit()" >Update</button>
+               
                   <button type="button" class="btn btn-danger my-1" onClick="deleteByid(${elem.id})" >Delete</button> 
               </div>`;
     })
@@ -47,21 +47,26 @@ function deleteByid(id) {
 }
 
 function edit() {
-  const id = `    <form action="/productos" method="get"onsubmit="editt(this)">
-  <input type="text" class="form-control"  id="title" placeholder="Objeto"> <br>
-  <input type="number" class="form-control"  id="price" placeholder="Precio"><br>
+  const id = `    <form action="/productos" method="get" >
+  <input type="text" class="form-control"  id="title" placeholder="Objeto" name="title" > <br>
+  <input type="number" class="form-control"  id="price" placeholder="Precio" name="price"><br>
 
 
-  <input type="submit" value="Editar"><br>
+  <input type="submit" value="Editar" onClick="editt()"><br>
 </form> `
   document.getElementById("id").innerHTML = id;
 }
 
 
-function editt(x) {
-  console.log("activa edit");
-  console.log(x)
-  // socket.emit("edit", id);
+function editt() { 
+
+let title = document.getElementById("title").value 
+let price = document.getElementById("price").value 
+console.log(title);
+console.log(price);
+
+  // socket.emit("edit", id)
+  
 }
 
 
@@ -83,3 +88,6 @@ socket.on("messagesEdited", (data) => {
 socket.on("messages", (data) => {
   render(data);
 });
+
+
+//    <button type="button" class="btn btn-light my-1" onClick="edit()" >Update</button>

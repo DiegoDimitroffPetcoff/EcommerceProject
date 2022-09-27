@@ -182,12 +182,16 @@ class Routes {
       res.render("main");
     });
     route.post("/productos", this.controller.postLogin, (req, res) => {
+      
       res.render("main", { isUser: true });
     });
+
+
 
     // --------------------------------FITER--------------------------------//
     route.get("/filter", this.controller.getFilter);
     route.post("/filter", this.controller.postFilter);
+  
     route.get("/tucarrito", this.controller.tucarrito);
     route.get("/tuCompra", this.controller.tuCompra);
     route.get("/carrito", this.controller.carrito);

@@ -147,6 +147,29 @@ class Controllers {
     }
   }
 
+
+  async postEdit(req, res) {
+    try {
+        console.log("activa get filter")
+      await api.postFilter(productFiltered);
+      res.render("postcarrito", {
+        Producto: await api.getFilter(req.params.num),
+        filter: productFiltered,
+        user: req.user,
+        isUser: true,
+      });
+    } catch (error) {
+      const msj = "No agregaste ningun producto";
+
+      console.log("ENTRO EL CATCH");
+      console.log(error);
+      res.render("carrito", {
+        Producto: await api.getFilter(req.params.num),
+        msj,
+      });
+    }
+  }
+
  async tucarrito(req, res) {
     if (req.isAuthenticated()) {
       res.render("tuCarrito", {
