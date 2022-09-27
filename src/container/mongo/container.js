@@ -3,13 +3,12 @@ class Contenedor {
     this.Schema = Schema;
   }
 
-  idLector() {
-    let objects = this.read();
-    let id = null;
-    objects.forEach((element) => {
-      id = element.id;
-    });
-    return id;
+  async save(content) {
+ let obj = { title: content.title, price: content.price }
+ console.log(obj);
+    let createModel = new this.Schema(obj);
+    return await createModel.save();
+
   }
 
   async read() {

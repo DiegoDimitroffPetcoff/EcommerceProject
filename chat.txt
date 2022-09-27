@@ -110,5 +110,19 @@
 			"text": "Probando nuevamente el chat"
 		},
 		"id": 8
+	},
+	{
+		"author": {
+			"email": "diegodimitroffpetcoff@gmail.com",
+			"nombre": "Diego",
+			"apellido": "Dimitroff",
+			"edad": "33",
+			"alias": "Dimi",
+			"avatar": "avatar"
+		},
+		"text": {
+			"text": "pROBANDO"
+		},
+		"id": 9
 	}
 ]

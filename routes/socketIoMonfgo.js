@@ -1,11 +1,12 @@
 const log4js = require("log4js");
-
+const ChatContainer = require("../src/daos/file/chatContainer");
+const chatContainer = new ChatContainer();
 // ---------------------------------PARA MONGO ---------------------------------//
-const ChatContainer = require("../src/daos/mongodb/chatContainer");
+// const ChatContainer = require("../src/daos/mongodb/chatContainer");
 const ProductosContainer = require("../src/daos/mongodb/productosContainer");
 const productos = new ProductosContainer();
-const chatContainer = new ChatContainer();
-// const { normalization } = require("../utils/normalizrMongo");
+// const chatContainer = new ChatContainer();
+const { normalization } = require("../utils/normalizr");
 const compressionRatio = require("../utils/calculator");
 
 // PRODUCTOS - --------------------------------
@@ -18,7 +19,7 @@ module.exports = function (io) {
       socket.emit("messages", prueba);
       socket.on("new-message", (data1) => {
         productos.save(data1);
-        prueba.push(data1);
+
 
         io.sockets.emit("messages", prueba);
 
