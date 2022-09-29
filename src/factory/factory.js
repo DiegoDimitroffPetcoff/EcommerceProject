@@ -24,9 +24,7 @@ class Factory {
       });
 
 
-    } else if (data == "mongo") {
-
-      
+    } else if (data == "mongo") {      
       mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
