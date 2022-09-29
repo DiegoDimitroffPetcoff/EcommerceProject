@@ -18,7 +18,7 @@ class Factory {
   }
   connection(data) {
     if (data == "file") {
-    mongoose.connect("mongodb+srv://diegodimii:Astronomico1@cluster0.99hplt2.mongodb.net/?retryWrites=true&w=majority", {
+    mongoose.connect(configs.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
