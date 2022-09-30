@@ -20,28 +20,20 @@ module.exports = function (io) {
       socket.on("new-message", (data1) => {
         productos.save(data1);
 
-
         io.sockets.emit("messages", prueba);
-
       });
-      socket.on ('delete',async (data)=>{
-      
-        let dataDeleted = await productos.getById(data)
+      socket.on("delete", async (data) => {
+        let dataDeleted = await productos.getById(data);
         let objDelete = await productos.Delete(await productos.getById(data));
-        io.sockets.emit("messagesDelete",(dataDeleted) );   
-        
-      })
+        io.sockets.emit("messagesDelete", dataDeleted);
+      });
 
-      socket.on ('edit',async (data)=>{
-      
-        let dataEdited = await productos.getById(data)
-        let objEdited = await productos.Update(dataEdited.id);
-        io.sockets.emit("messagesEdited",(dataEdited) );   
-        
-      })
+      socket.on("edit", async (object, id) => {
+        // let dataEdited = await productos.getById(id)
 
-
-
+        let objEdited = await productos.Update(object,id);
+        // io.sockets.emit("messagesEdited",(dataEdited) );
+      });
     } catch (error) {
       let logger = log4js.getLogger("errorConsole");
       logger.error("PROBANDO EL LOG DE ERROR");
@@ -87,5 +79,4 @@ module.exports = function (io) {
       console.log(error);
     }
   });
-
 };
