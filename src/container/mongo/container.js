@@ -4,7 +4,7 @@ class Contenedor {
   }
 
   async save(content) {
-    let obj = { title: content.title, price: content.price };
+    let obj = { title: content.title, price: content.price, id: content.id };
     console.log(obj);
     let createModel = new this.Schema(obj);
     return await createModel.save();

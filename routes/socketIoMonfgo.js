@@ -8,6 +8,7 @@ const productos = new ProductosContainer();
 // const chatContainer = new ChatContainer();
 const { normalization } = require("../utils/normalizr");
 const compressionRatio = require("../utils/calculator");
+const { CpsContext } = require("twilio/lib/rest/preview/trusted_comms/cps");
 
 // PRODUCTOS - --------------------------------
 let compression = null;
@@ -17,9 +18,10 @@ module.exports = function (io) {
     try {
       let prueba = await productos.read();
       socket.emit("messages", prueba);
-      socket.on("new-message", (data1) => {
-        productos.save(data1);
-
+      socket.on("new-message", (data) => {
+        let id = prueba.pop().id + 1;
+        let object = { title: data.title, price: data.price, id: id };
+        productos.save(object);
         io.sockets.emit("messages", prueba);
       });
       socket.on("delete", async (data) => {
@@ -31,7 +33,7 @@ module.exports = function (io) {
       socket.on("edit", async (object, id) => {
         // let dataEdited = await productos.getById(id)
 
-        let objEdited = await productos.Update(object,id);
+        let objEdited = await productos.Update(object, id);
         // io.sockets.emit("messagesEdited",(dataEdited) );
       });
     } catch (error) {

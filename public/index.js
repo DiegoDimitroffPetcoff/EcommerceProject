@@ -13,6 +13,7 @@ function addMessage(e) {
 
 // ------------------------------RENDER FUNCTIONS-------------------------------//
 function render(data) {
+
   const object = data
     .map((elem, index) => {
       return `<div >${elem.title}</div>`;
@@ -29,14 +30,16 @@ function render(data) {
   document.getElementById("price").innerHTML = price;
   const id = data
     .map((elem, index) => { 
-      return `
+    
+     return `
+
       <div> 
-      <button type="button" class="btn btn-light my-1" onClick="filterFunction(${elem.id})">Select</button> 
+      <button type="button" class="btn btn-light my-1" onClick="filterFunction(${elem.id})">Select</button>   
       <button type="button" class="btn btn-light my-1" onClick="edit(${elem.id})" >Update</button>
       <button type="button" class="btn btn-danger my-1" onClick="deleteByid(${elem.id})" >Delete</button> 
               </div>`;
     })
-    .join("  ");
+    .join(" ");
     
   document.getElementById("id").innerHTML = id;
 
@@ -51,8 +54,7 @@ function deleteByid(id) {
 }
 
 function edit(data) {
-  console.log("DATA que se recibe del ID");
-console.log(data);
+
   const id = `  Objeto a editar:
    <form action="/productos" method="get" >
    <div>  ${data}</div> 
@@ -66,7 +68,9 @@ console.log(data);
   <button  class="form-control" value="Volver" onClick="goBack()">Volver</button>
 </form> `;
 
-  document.getElementById("id").innerHTML = id;
+ const documento = document.getElementById("id").innerHTML = id;
+  console.log("-----//");
+  console.log(documento);
 }
 
 function editt(x) {
@@ -100,3 +104,6 @@ function goBack(){
   location.href = `/productos`;
 }
 //    <button type="button" class="btn btn-light my-1" onClick="edit()" >Update</button>
+
+
+
