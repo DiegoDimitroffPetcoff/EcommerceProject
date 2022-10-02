@@ -19,14 +19,22 @@ module.exports = function (io) {
       let prueba = await productos.read();
       socket.emit("messages", prueba);
       socket.on("new-message", (data) => {
-        let id = prueba.pop().id + 1;
-        let object = { title: data.title, price: data.price, id: id };
-        productos.save(object);
-        io.sockets.emit("messages", prueba);
+        if (prueba.id == undefined) {
+          let id = 1;
+          let object = { title: data.title, price: data.price, id: id };
+          productos.save(object);
+          io.sockets.emit("messages", prueba);
+        } else {
+          let id = prueba.pop().id + 1;
+          let object = { title: data.title, price: data.price, id: id };
+          productos.save(object);
+          io.sockets.emit("messages", prueba);
+        }
       });
       socket.on("delete", async (data) => {
         let dataDeleted = await productos.getById(data);
         let objDelete = await productos.Delete(await productos.getById(data));
+
         io.sockets.emit("messagesDelete", dataDeleted);
       });
 

@@ -29,7 +29,7 @@ class Contenedor {
   }
 
   async Delete(element) {
-    return await this.Schema.deleteOne(element);
+    return await this.Schema.deleteOne({ id: element.id });
   }
 
   async Update(object, id) {
