@@ -27,6 +27,14 @@ const UserModel = require("../src/models/usuarios.js");
 const validatePass = require("../utils/passValidatos");
 const createHash = require("../utils/hashGenerator");
 const { TIEMPO_EXPIRACION } = require("../src/config/globals");
+const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
+const {
+  sendEmail,
+  renderMsj,
+  renderMsjAdministrator,
+  renderMsjSmsWap,
+  renderMsjWapAdministrator,
+} = require('../utils/mailSignup');
 
 route.use(
   session({
