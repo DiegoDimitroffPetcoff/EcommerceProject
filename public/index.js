@@ -16,32 +16,33 @@ function render(data) {
 
   const object = data
     .map((elem, index) => {
-      return `<div >${elem.title}</div>`;
+      return `
+      <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">PRECIO</th>      
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">${elem.id}</th>
+          <td>${elem.title}</td>
+          <td>$${elem.price}</td>
+          <td>      
+          <button type="button" class="btn btn-light my-1" onClick="filterFunction(${elem.id})">Select</button>   
+          <button type="button" class="btn btn-light my-1" onClick="edit(${elem.id})" >Update</button>
+          <button type="button" class="btn btn-danger my-1" onClick="deleteByid(${elem.id})" >Delete</button> 
+                  </td>
+        </tr>
+        
+      </tbody>
+    </table>`;
     })
     .join("  ");
   document.getElementById("object").innerHTML = object;
 
-  const price = data
-    .map((elem, index) => {
-      return `
-    <div>$${elem.price}</div>`;
-    })
-    .join(" ");
-  document.getElementById("price").innerHTML = price;
-  const id = data
-    .map((elem, index) => { 
-    
-     return `
-
-      <div> 
-      <button type="button" class="btn btn-light my-1" onClick="filterFunction(${elem.id})">Select</button>   
-      <button type="button" class="btn btn-light my-1" onClick="edit(${elem.id})" >Update</button>
-      <button type="button" class="btn btn-danger my-1" onClick="deleteByid(${elem.id})" >Delete</button> 
-              </div>`;
-    })
-    .join(" ");
-    
-  document.getElementById("id").innerHTML = id;
 
 }
 // ------------------------------BUTTONS FUNCTIONS-------------------------------//
@@ -55,7 +56,7 @@ function deleteByid(id) {
 
 function edit(data) {
 
-  const id = `  Objeto a editar:
+  const id = `  Id del producto:
    <form action="/productos" method="get" >
    <div>  ${data}</div> 
    <input id="prodId" name="prodId" type="hidden" value="${data}">
@@ -68,7 +69,7 @@ function edit(data) {
   <button  class="form-control" value="Volver" onClick="goBack()">Volver</button>
 </form> `;
 
- const documento = document.getElementById("id").innerHTML = id;
+ const documento = document.getElementById("object").innerHTML = id;
   console.log("-----//");
   console.log(documento);
 }

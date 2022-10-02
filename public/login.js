@@ -16,16 +16,5 @@ function logOut(params) {
 
 
 
-// let username = null;
-// socket.on("logeado", (data) => {
-//   try {
-//     let dataParse = JSON.parse(data);
-//     renderName(dataParse.username);
-//   } catch (error) {
-//     console.log("ERROR - NO FUNCIONA");
-//     console.log(error);
-//   }
-// });
-
 module.exports = {renderName, logOut}
 

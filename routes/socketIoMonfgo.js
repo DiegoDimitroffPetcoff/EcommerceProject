@@ -18,19 +18,30 @@ module.exports = function (io) {
     try {
       let prueba = await productos.read();
       socket.emit("messages", prueba);
-      socket.on("new-message", (data) => {
-        if (prueba.id == undefined) {
-          let id = 1;
+      socket.on("new-message", async (data) => {
+        try {
+          console.log(prueba);
+          let id = prueba.pop().id;
+          id++;
+          console.log("SI LLEGA HASTA id");
+          console.log(id);
           let object = { title: data.title, price: data.price, id: id };
           productos.save(object);
+          console.log("TRY");
           io.sockets.emit("messages", prueba);
-        } else {
-          let id = prueba.pop().id + 1;
-          let object = { title: data.title, price: data.price, id: id };
+        } catch {
+          console.log("entra por catch");
+          prueba.id = 1;
+          let object = {
+            title: data.title,
+            price: data.price,
+            id: prueba.id,
+          };
           productos.save(object);
           io.sockets.emit("messages", prueba);
         }
       });
+
       socket.on("delete", async (data) => {
         let dataDeleted = await productos.getById(data);
         let objDelete = await productos.Delete(await productos.getById(data));
@@ -39,10 +50,7 @@ module.exports = function (io) {
       });
 
       socket.on("edit", async (object, id) => {
-        // let dataEdited = await productos.getById(id)
-
         let objEdited = await productos.Update(object, id);
-        // io.sockets.emit("messagesEdited",(dataEdited) );
       });
     } catch (error) {
       let logger = log4js.getLogger("errorConsole");
