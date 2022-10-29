@@ -27,12 +27,13 @@ async function sendEmail(userWithId, mailOptions) {
   }
 }
 
-function renderMsj(productos, nombre) {
+async function renderMsj(productos, nombre) {
   let HTML = `<h1>${nombre} Muchas gracias por tu compra!</h1> 
   
   Esta es la lista de los productos que has adquirido.
    `;
-  productos.forEach((elem) => {
+
+ await productos.forEach((elem) => {
     HTML += `
           <h4>Produto: ${elem.title} </h4>
           <h5>Precio: $${elem.price}</h5>
@@ -45,12 +46,12 @@ function renderMsj(productos, nombre) {
   return HTML;
 }
 
-function renderMsjWapAdministrator(productos, nombre) {
+async function renderMsjWapAdministrator(productos, nombre) {
   let HTML = `MENSAJE PARA ADMINISTRADOR
   ${nombre} Realizo una nueva compra 
   Productos comprados:
    `;
-  productos.forEach((elem) => {
+  await productos.forEach((elem) => {
     HTML += `
           Produto: ${elem.title} 
           Precio: $${elem.price}
@@ -63,12 +64,12 @@ function renderMsjWapAdministrator(productos, nombre) {
   return HTML;
 }
 
-function renderMsjSmsWap(productos, nombre) {
+async function renderMsjSmsWap(productos, nombre) {
   let HTML = `${nombre} Muchas gracias por tu compra! 
   
   Esta es la lista de los productos que has adquirido.
    `;
-  productos.forEach((elem) => {
+  await productos.forEach((elem) => {
     HTML += `
           Produto: ${elem.title} 
           Precio: $${elem.price}
@@ -81,7 +82,7 @@ function renderMsjSmsWap(productos, nombre) {
   return HTML;
 }
 
-function renderMsjAdministrator(productos, usuario) {
+async function renderMsjAdministrator(productos, usuario) {
   let HTML = `<h1>Compra realizada</h1> 
   <h2>Info del usuario:</h2> <br>
   <h3>Usuario:</h3> ${usuario.username},
@@ -97,7 +98,7 @@ function renderMsjAdministrator(productos, usuario) {
 
   <h2>Esta es la lista de los productos que el cliente ha adquirido.</h2>
    `;
-  productos.forEach((elem) => {
+  await productos.forEach((elem) => {
     HTML += `
           <h4>Produto: ${elem.title} </h4>
           <h5>Precio: $${elem.price}</h5>
