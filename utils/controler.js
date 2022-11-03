@@ -19,7 +19,7 @@ const {
   renderMsjSmsWap,
   renderMsjWapAdministrator,
 } = require("../utils/mailSignup");
-const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
+// const { sendSms, sendWap, sendWapAdministrator } = require("../utils/msj");
 const TEST_MAIL = process.env.TEST_MAIL || "diegodimitroffpetcoff@gmail.com";
 
 let productFiltered = "FILTRO VACIO";
@@ -231,9 +231,9 @@ class Controllers {
       };
       sendEmail("Se envio e-mail", mailOptions);
       sendEmail("Se envio e-mail al administrador", mailOptionsAdministrator);
-      sendWap(HTMLSMSWAP, phoneUser);
-      sendWapAdministrator(HTMLSMSWAPADM);
-      sendSms(HTMLSMSWAP, phoneUser);
+      // sendWap(HTMLSMSWAP, phoneUser);
+      // sendWapAdministrator(HTMLSMSWAPADM);
+      // sendSms(HTMLSMSWAP, phoneUser);
 
       res.render("tuCompra", {
         Productos: api.tuCarrito(),

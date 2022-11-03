@@ -7,6 +7,9 @@ const ADMINISTRATOR_NUMBER = process.env.ADMINISTRATOR_NUMBER ||'whatsapp:+35193
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 async function sendSms(msj, client) {
+
+  console.log("---------------------------------//")
+  console.log(client.messages)
   try {
     const message = await client.messages.create({
       body: msj,
