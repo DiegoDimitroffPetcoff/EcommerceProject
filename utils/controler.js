@@ -201,17 +201,18 @@ class Controllers {
     });
   }
 
-  tuCompra(req, res) {
+  async tuCompra(req, res) {
     if (req.isAuthenticated()) {
       let Productos = api.tuCarrito();
       let phoneUser = req.user.phonenumber;
-      let HTML = renderMsj(Productos, req.user.lastName);
-      let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
-      let HTMLSMSWAPADM = renderMsjWapAdministrator(
-        Productos,
-        req.user.lastName
-      );
-      let HTMLadministrator = renderMsjAdministrator(Productos, req.user);
+      let HTML = await renderMsj(Productos, req.user.lastName);
+      // let HTMLSMSWAP = renderMsjSmsWap(Productos, req.user.lastName);
+      // let HTMLSMSWAPADM = renderMsjWapAdministrator(
+      //   Productos,
+      //   req.user.lastName
+      // );
+      let HTMLadministrator = await renderMsjAdministrator(Productos, req.user);
+
       let mailOptions = {
         from: "Envio este correo desde mi App",
 
@@ -223,6 +224,7 @@ class Controllers {
         subject: `${req.user.lastName} muchas gracias por tu compra!`,
         html: HTML,
       };
+
       let mailOptionsAdministrator = {
         from: "Correo de control para el administrador",
         to: TEST_MAIL,

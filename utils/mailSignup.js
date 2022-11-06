@@ -32,8 +32,9 @@ async function renderMsj(productos, nombre) {
   
   Esta es la lista de los productos que has adquirido.
    `;
+let prod1 = await productos;
 
- await productos.forEach((elem) => {
+prod1.forEach((elem) => {
     HTML += `
           <h4>Produto: ${elem.title} </h4>
           <h5>Precio: $${elem.price}</h5>
@@ -51,7 +52,8 @@ async function renderMsjWapAdministrator(productos, nombre) {
   ${nombre} Realizo una nueva compra 
   Productos comprados:
    `;
-  await productos.forEach((elem) => {
+   let prod1 = await productos
+   prod1.forEach((elem) => {
     HTML += `
           Produto: ${elem.title} 
           Precio: $${elem.price}
@@ -69,7 +71,8 @@ async function renderMsjSmsWap(productos, nombre) {
   
   Esta es la lista de los productos que has adquirido.
    `;
-  await productos.forEach((elem) => {
+   let prod1 = await productos
+   prod1.forEach((elem) => {
     HTML += `
           Produto: ${elem.title} 
           Precio: $${elem.price}
@@ -98,7 +101,8 @@ async function renderMsjAdministrator(productos, usuario) {
 
   <h2>Esta es la lista de los productos que el cliente ha adquirido.</h2>
    `;
-  await productos.forEach((elem) => {
+   let prod1 = await productos
+   prod1.forEach((elem) => {
     HTML += `
           <h4>Produto: ${elem.title} </h4>
           <h5>Precio: $${elem.price}</h5>
